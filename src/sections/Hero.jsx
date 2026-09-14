@@ -37,9 +37,9 @@ export default function Hero() {
           {/* The site name is the `h1` for the same reason it is the largest
               thing on the page: it names what this page is about. The line
               under it is a `p`. */}
-          {/* The mark, then the name. The mark spells "word" in one line and
-              the h1 says it properly — they are the same thought at two
-              sizes, which is why the mark carries no alt text of its own. */}
+          {/* The mark, then the name. The mark is the immortelle in outline
+              and carries no words, so it carries no alt text either — the h1
+              directly under it is what names the business. */}
           <Logo className="h-14 sm:h-20 w-auto text-pine mb-6 sm:mb-8" />
 
           <h1

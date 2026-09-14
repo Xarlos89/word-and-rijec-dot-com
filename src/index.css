@@ -128,13 +128,13 @@
   }
 
   /* ── Buttons — pills, never sharp ──────────────────────── */
-  /* The primary is `dandelion` with `ink` type on it (8.9:1) — the one warm
+  /* The primary is `dandelion` with `ink` type on it (9.7:1) — the one warm
      thing on a green page. It carries a `dandelion-deep` ring because the
-     yellow is almost exactly the value of both bands (1.0:1 on each):
-     without the ring the pill has no boundary at all, which is the WCAG
-     1.4.11 case. The ring is 3.2:1 on `haze` and 4.5:1 on `mint`. The hover
-     fills with `dandelion-deep` and flips the type to `cloud` (6.5:1) — ink
-     on dandelion-deep would fail. */
+     pastel yellow is close to the value of both bands (1.1:1 on `mint`,
+     1.5:1 on `haze`): without the ring the pill has barely a boundary at
+     all, which is the WCAG 1.4.11 case. The ring is 3.2:1 on `haze` and
+     4.5:1 on `mint`. The hover fills with `dandelion-deep` and flips the
+     type to `cloud` (6.5:1) — ink on dandelion-deep would fail. */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2.5 px-8 py-3.5
            bg-dandelion text-ink font-sans font-bold text-sm

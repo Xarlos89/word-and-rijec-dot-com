@@ -137,25 +137,28 @@ addition: if it is not the water, the stone, the trees or the flower, it does no
 | `pine` | `#24463C` | the trees. The footer, and heading and label type on the light bands |
 | `pine-light` | `#33594D` | dark `<Photo>` placeholders only; nothing uses it now |
 | `cloud` | `#F4F5F1` | cards, the navbar pill, ghost buttons, and the text colour on `pine`. **Never a section background.** |
-| `dandelion` | `#F0C93E` | the immortelle bloom. The primary button — a ground for `ink` type (8.9:1) |
+| `dandelion` | `#EDD382` | the immortelle bloom. A pastel yellow; the primary button — a ground for `ink` type (9.7:1) |
 | `dandelion-deep` | `#6E540A` | the only yellow that can be type on a light ground: prices, the Approach numerals, the button's ring and its hover fill |
 | `ink` / `ink-soft` | `#212D27` / `#333F38` | body type on the light bands |
 | `line` | `#74837C` | hairlines and ghost-button borders |
 
 Contrast was computed, not eyeballed. Everything used for type clears AA: ink/mint 9.1, ink/haze 6.4,
-ink-soft/mint 7.0, ink-soft/haze 4.94, pine/mint 6.6, pine/haze 4.68, cloud/pine 9.5, ink/dandelion 8.9,
-cloud/dandelion-deep 6.5, dandelion-deep/cloud 6.5, dandelion/pine 6.5.
+ink-soft/mint 7.0, ink-soft/haze 4.94, pine/mint 6.6, pine/haze 4.68, cloud/pine 9.5, ink/dandelion 9.7,
+cloud/dandelion-deep 6.5, dandelion-deep/cloud 6.5, dandelion/pine 7.1.
 
 Four things the numbers catch and the eye does not:
 
-- **The primary button carries a `dandelion-deep` ring, and it is not decoration.** The yellow is almost
-  exactly the value of both bands — 1.0:1 against each — so a bare pill would have no boundary at all. The
-  ring is 3.2:1 on `haze` and 4.5:1 on `mint`, clearing the WCAG 1.4.11 threshold for a control's edge. Do
-  not remove it. (`dandelion-deep` was darkened from a first pick specifically to clear 3:1 on `haze`.)
+- **The primary button carries a `dandelion-deep` ring, and it is not decoration.** The yellow is close to
+  the value of both bands — 1.1:1 on `mint`, 1.5:1 on `haze` — so a bare pill would have almost no boundary
+  at all. The ring is 3.2:1 on `haze` and 4.5:1 on `mint`, clearing the WCAG 1.4.11 threshold for a
+  control's edge. Do not remove it. (`dandelion-deep` was darkened from a first pick specifically to clear
+  3:1 on `haze`, and it has no headroom left — it is the one token here that must not drift lighter.)
 - **The button's hover flips the type to `cloud`.** `ink` on `dandelion-deep` fails badly; the fill and the
   text colour have to change together.
 - **`dandelion` is a ground, never type on a light band.** Where the yellow appears as type — the prices,
-  the big Approach numerals, a testimonial's name — it is `dandelion-deep`.
+  the big Approach numerals, a testimonial's name — it is `dandelion-deep`. Because every use of it is a
+  ground, the bloom is safe to soften further (paler only raises the contrast of the `ink` on it) but not
+  to brighten past its original `#F0C93E`; `deep` cannot move at all, see the ring above.
 - **A `cloud` card on the `mint` band is only 1.44:1 against it.** The shadow is most of what says the card
   is raised, which is why `soft`/`lift`/`deep` carry real weight here. Do not lighten them.
 
@@ -201,15 +204,23 @@ display size under a display heading reads as a heading that failed to commit.
 
 ### The logo
 
-`src/components/Logo.jsx` is the brand mark: **the word "word" written as a single unbroken line**, whose
-last letter grows a stem and opens into an immortelle umbel — the same flat-topped cluster that grows along
-every section seam. It is one `<path>`: no lifts, no joins, no fills, round caps. A one-line tattoo.
+`src/components/Logo.jsx` is the brand mark: **a single immortelle flower in outline** — one slender stem,
+two needle leaves, and the flat-topped umbel of four buttons that grows along every section seam. Portrait,
+`64×80`, drawn in open line with round caps and no fills.
 
-- **It has a floor of about 28px of height.** Below that the cursive letters close up into a squiggle. The
-  navbar runs it at its floor; the hero and footer give it room.
-- `src/components/Sprig.jsx` is the small-size stand-in — the bloom alone, no lettering — for 16px slots,
-  the `<Photo>` empty state and the favicon. Same flower, less detail.
-- If it is redrawn, **keep it a single continuous stroke**. That is the whole idea of the mark.
+**The mark carries no lettering.** An earlier round drew the word "word" as one unbroken cursive line ending
+in the umbel; it was replaced by the flower alone. The wordmark text sits next to the mark at all three call
+sites and already says the name, so the mark does not repeat it — which is also why it is `aria-hidden`
+unless given a `title`.
+
+- **Outline, not silhouette.** The buttons are hollow rings. That is the entire difference between `<Logo>`
+  and `<Sprig>`, and it is why the two are not interchangeable.
+- `src/components/Sprig.jsx` is the small-size form — same flower, **solid** buttons — for 16px slots, the
+  `<Photo>` empty state and the favicon. Below about 24px a ring closes up into a dot, so anything that
+  small takes `<Sprig>`. `public/favicon.svg` is the same solid drawing, for the same reason.
+- Call sites set a height and let the width follow (`h-7 w-auto` in the navbar, `h-8` in the footer,
+  `h-14 sm:h-20` in the hero). The stroke is in user units, so its optical weight holds at every size.
+- If it is redrawn, **keep it one flower in open line**. That is the whole idea of the mark.
 - It is still a placeholder in the sense that matters: a real illustrator should draw this. What is here is
   a faithful sketch of the concept, not a finished identity.
 
