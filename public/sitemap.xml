@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- One page, one URL. Nothing is crawling this yet: robots.txt is
+     Disallow-all and index.html is noindex until real copy ships. Bump
+     <lastmod> then, and uncomment the Sitemap line in robots.txt. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://word-in-rijec.com/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>

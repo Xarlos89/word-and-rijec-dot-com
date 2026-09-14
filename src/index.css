@@ -1,0 +1,216 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Self-hosted fonts (pulled from Google Fonts). Local files mean no
+   third-party request on page load and no flash of fallback type while a CDN
+   answers. Both families are variable.
+
+   Each family ships TWO files, split on unicode-range exactly as Google
+   serves them. The `latin` file is ASCII and Latin-1; `latin-ext` is what
+   carries č, ć, š, ž and đ — which this site cannot do without, starting with
+   the word "Riječ" in its own name. Never drop the latin-ext blocks to save
+   bytes: the browser only fetches them when a page actually uses those
+   characters, and every Croatian sentence on the page does.
+
+   Valley Sans ships as ONE static weight, 400, with no italic and no other
+   cut. That is a constraint, not an oversight: a `font-medium`, `font-bold`
+   or `italic` utility on display type makes the browser synthesise the shape,
+   which on this face is visibly wrong. Weight and emphasis in the display
+   register come from SIZE and COLOUR only. Nunito carries the real weights,
+   so anything that has to get bolder is body type. */
+@font-face {
+  font-family: 'Valley Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/valleysans-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Valley Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/valleysans-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('../fonts/nunito-latin.woff2') format('woff2-variations');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('../fonts/nunito-latin-ext.woff2') format('woff2-variations');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* The navbar floats over the page, so an anchor jump has to stop short of
+     the section's own top or the pill lands on the heading. */
+  section[id],
+  footer[id] {
+    scroll-margin-top: 5.5rem;
+  }
+
+  body {
+    @apply font-sans font-normal text-ink bg-haze antialiased;
+  }
+
+  /* Fine paper grain across the whole page — applied once, at the page level,
+     so it never leaves a seam where two colour bands meet. */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.26;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    background: theme('colors.dandelion.DEFAULT');
+    color: theme('colors.ink.DEFAULT');
+  }
+}
+
+@layer components {
+  /* ── Type ──────────────────────────────────────────────── */
+  /* Valley Sans is wide and geometric with generous counters, so display
+     type here takes slightly negative tracking and a little more line-height
+     than a normal sans would want. It has one weight, so `font-normal` is the
+     only weight utility allowed on `.font-display`. */
+  .label {
+    @apply font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-pine;
+  }
+
+  /* The only light-on-dark class left. The page body alternates two light
+     bands now, and the footer is the one `pine` surface on the site — if you
+     add a dark section, the other `-light` variants have to come back with
+     it. */
+  .label-light {
+    @apply font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-dandelion;
+  }
+
+  .section-heading {
+    @apply font-display font-normal leading-[1.2] tracking-[-0.015em];
+    font-size: clamp(2rem, 4.4vw, 2.9rem);
+  }
+
+  /* The quiet second line under a section heading: the heading carries the
+     name of the section, this carries the descriptive phrase. Set in the body
+     face rather than the display one — Valley Sans at a middling size next to
+     a Valley Sans heading reads as a heading that failed to commit. */
+  .section-sub {
+    @apply font-sans font-light leading-[1.5];
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+  }
+
+  .section-sub {
+    @apply text-ink-soft;
+  }
+
+  .lede {
+    @apply font-sans text-[15px] sm:text-base text-ink-soft leading-[1.85];
+  }
+
+  /* ── Buttons — pills, never sharp ──────────────────────── */
+  /* The primary is `dandelion` with `ink` type on it (8.9:1) — the one warm
+     thing on a green page. It carries a `dandelion-deep` ring because the
+     yellow is almost exactly the value of both bands (1.0:1 on each):
+     without the ring the pill has no boundary at all, which is the WCAG
+     1.4.11 case. The ring is 3.2:1 on `haze` and 4.5:1 on `mint`. The hover
+     fills with `dandelion-deep` and flips the type to `cloud` (6.5:1) — ink
+     on dandelion-deep would fail. */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2.5 px-8 py-3.5
+           bg-dandelion text-ink font-sans font-bold text-sm
+           rounded-full border border-dandelion-deep shadow-soft
+           transition-all duration-500 ease-out
+           hover:bg-dandelion-deep hover:text-cloud hover:shadow-lift;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2.5 px-8 py-3.5
+           border border-line text-ink font-sans font-bold text-sm
+           rounded-full bg-cloud/70 shadow-soft
+           transition-all duration-500 ease-out hover:bg-cloud hover:border-pine hover:shadow-lift;
+  }
+
+  /* ── Surfaces — soft, borderless ───────────────────────── */
+  /* `cloud` is the lightest tone on the page, so a card reads as raised on
+     either band without a white panel appearing mid-section. On `mint` it is
+     only 1.44:1 against the ground, so the shadow does most of the work. */
+  .soft-card {
+    @apply bg-cloud rounded-soft p-7 shadow-lift;
+  }
+
+  /* Every photo sits on the page rather than in it */
+  .photo-frame {
+    @apply overflow-hidden shadow-lift;
+  }
+
+  .hairline {
+    @apply bg-line;
+  }
+
+  /* svh keeps the hero honest on phones, where 100vh is taller than the
+     screen actually is until the address bar collapses. */
+  .hero-height {
+    min-height: 86vh;
+  }
+
+  @supports (min-height: 100svh) {
+    .hero-height {
+      min-height: 88svh;
+    }
+  }
+
+  /* ── Motion ────────────────────────────────────────────── */
+  .reveal-ready .reveal {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+  }
+
+  .reveal-ready .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal-ready .reveal,
+  .reveal-ready .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .animate-breathe,
+  .animate-sway {
+    animation: none !important;
+  }
+}

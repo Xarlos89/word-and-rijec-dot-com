@@ -1,0 +1,7 @@
+# The domain is live but the content is still placeholder — see the noindex
+# tag in index.html. Flip this to "Allow: /" and uncomment the Sitemap line in
+# the same commit that ships real copy.
+User-agent: *
+Disallow: /
+
+# Sitemap: https://word-in-rijec.com/sitemap.xml

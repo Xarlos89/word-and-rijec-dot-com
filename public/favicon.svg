@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="24" fill="#B8D6B2"/>
+  <!-- One immortelle sprig: the same flower that grows along every section
+       seam and tops the <Logo>. The full word-flower mark is unreadable at
+       32px, so the icon carries the bloom alone. -->
+  <g fill="none" stroke="#24463C" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M50 88c0-22 2.5-36 5.5-48"/>
+    <path d="M56 42c-5 2.5-11 2.5-16 0"/>
+  </g>
+  <g fill="#6E540A">
+    <circle cx="28" cy="35" r="8.5"/>
+    <circle cx="47" cy="28" r="10.5"/>
+    <circle cx="68" cy="28" r="10.5"/>
+    <circle cx="86" cy="35" r="8.5"/>
+  </g>
+</svg>

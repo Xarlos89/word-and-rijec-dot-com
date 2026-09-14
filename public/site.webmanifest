@@ -1,0 +1,12 @@
+{
+  "name": "Word & Riječ",
+  "short_name": "Word & Riječ",
+  "description": "English and Croatian language services: tutoring, language lessons, editing, proofreading and copywriting.",
+  "lang": "en",
+  "start_url": "./",
+  "scope": "./",
+  "display": "browser",
+  "background_color": "#A7B0AA",
+  "theme_color": "#B8D6B2",
+  "icons": []
+}

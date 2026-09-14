@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page not found — Word &amp; Riječ</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#24463C" />
+    <link rel="icon" type="image/svg+xml" href="https://word-in-rijec.com/favicon.svg" />
+
+    <!--
+      GitHub Pages serves this for any unknown path, so it can be requested at
+      any depth (/a/b/c). Relative asset paths would break there — every URL
+      here is absolute, and the page carries its own styles so it needs
+      nothing else to render. It keeps the 404 status rather than redirecting:
+      a redirect to the home page reads as a soft 404.
+
+      The absolute URLs point at the canonical apex, word-in-rijec.com. If
+      the domain ever changes, rewrite all four of them here — the favicon,
+      both @font-face sources and the home-page link.
+    -->
+    <style>
+      @font-face {
+        font-family: 'Valley404';
+        src: url('https://word-in-rijec.com/fonts/valleysans-latin.woff2') format('woff2');
+        font-weight: 400;
+        font-display: swap;
+      }
+      @font-face {
+        font-family: 'Valley404';
+        src: url('https://word-in-rijec.com/fonts/valleysans-latin-ext.woff2') format('woff2');
+        font-weight: 400;
+        font-display: swap;
+        unicode-range: U+0100-02BA, U+1E00-1E9F, U+2C60-2C7F, U+A720-A7FF;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        min-height: 100svh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 1.5rem;
+        background: #24463C;
+        color: #F4F5F1;
+        font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      main { max-width: 34rem; }
+      h1 {
+        font-family: 'Valley404', ui-rounded, system-ui, sans-serif;
+        font-weight: 600;
+        font-size: clamp(1.7rem, 5vw, 2.6rem);
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+        margin: 0 0 1.25rem;
+      }
+      p {
+        font-size: 1.0625rem;
+        line-height: 1.75;
+        color: rgba(244, 245, 241, 0.8);
+        margin: 0 0 2rem;
+      }
+      .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+      a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.875rem 1.75rem;
+        border-radius: 999px;
+        font-size: 0.9375rem;
+        text-decoration: none;
+        transition: background-color 0.3s, border-color 0.3s;
+      }
+      .primary { background: #F0C93E; color: #212D27; }
+      .primary:hover { background: #6E540A; color: #F4F5F1; }
+      .ghost { border: 1px solid rgba(244, 245, 241, 0.45); color: #F4F5F1; }
+      .ghost:hover { border-color: #F4F5F1; }
+      @media (prefers-reduced-motion: reduce) { a { transition: none; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>That page isn&rsquo;t here</h1>
+      <p>
+        The link may be out of date. Everything &mdash; the services, how it
+        works, rates and how to get in touch &mdash; is on the home page.
+      </p>
+      <div class="actions">
+        <a class="primary" href="https://word-in-rijec.com/">Go to the home page</a>
+      </div>
+    </main>
+  </body>
+</html>
