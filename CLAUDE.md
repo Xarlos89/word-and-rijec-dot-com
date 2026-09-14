@@ -7,6 +7,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 A one-page static marketing site for **Word and Riječ**, a language-services business offering tutoring,
 language lessons, editing, proofreading and copywriting in English and Croatian.
 
+The page is built **twice, once per language** — `/` in English and `/hr/` in Croatian — from one set of
+components and two dictionaries. See "Two languages" below before touching any user-visible string.
+
 It is currently a **template**: the structure, the design system and the deploy pipeline are real, and
 essentially all of the copy is lorem ipsum. Nothing on the page has been confirmed by the client. See
 "What's placeholder" at the bottom — read that section before writing any content.
@@ -23,8 +26,10 @@ npm run build    # prerender to dist/ via vite-react-ssg
 npm run preview  # serve the built dist/ locally
 ```
 
-There is no test suite, no linter and no typechecker. `npm run build` is the only gate — it prerenders the
-page, so a runtime error in a component fails the build rather than appearing in the browser.
+There is no test suite, no linter and no typechecker. `npm run build` is the only gate — it prerenders
+**both** pages (`dist/index.html` and `dist/hr/index.html`), so a runtime error in a component fails the
+build rather than appearing in the browser. The same-shape check on the two dictionaries rides on that:
+see "Two languages".
 
 Two optional Python helpers, neither wired into the build:
 
@@ -37,29 +42,118 @@ pip install fonttools brotli && python3 scripts/trim-fonts.py   # narrow the fon
 
 - **React 18**, function components only, no state management beyond `useState` in one FAQ accordion.
 - **Vite 5** with `base: './'`. See Deployment — the relative base is load-bearing.
-- **vite-react-ssg** (`/single-page` entry) prerenders `App` to static HTML at build time. `src/main.jsx`
-  exports `createRoot`; there is no `ReactDOM.render` call anywhere.
+- **vite-react-ssg** (the routes entry, **not** `/single-page` any more) prerenders `App` once per language
+  to `dist/index.html` and `dist/hr/index.html`. `src/main.jsx` exports `createRoot`; there is no
+  `ReactDOM.render` call anywhere.
 - **Tailwind 3**, configured in `tailwind.config.js`, with a handful of component classes in
   `src/index.css`. No CSS modules, no styled-components, no Tailwind plugins.
-- No router, no forms, no backend, no analytics.
+- **react-router-dom**, but only as a build-time list. `src/routes.jsx` gives vite-react-ssg the two paths
+  to walk; nothing navigates through it at runtime. Every in-page link is a fragment and the language
+  switcher is a plain `<a>` that loads the other document. Do not add client-side navigation on top of it
+  without re-reading "Two languages".
+- No forms, no backend, no analytics.
 
 ## Project layout
 
 ```
-index.html              <head>: meta, Open Graph, JSON-LD, font preloads. Hand-maintained.
+index.html              <head>: only what is identical in BOTH languages. Hand-maintained.
 src/
   main.jsx              vite-react-ssg entry
+  routes.jsx            one route per language — the build-time page list
   App.jsx               the whole page — the band order lives here
   index.css             @font-face blocks, base layer, component classes
-  siteInfo.js           name, contact details, URL — every component reads from here
+  siteInfo.js           LANGUAGE-INDEPENDENT facts: name, email, phone, canonical URL
+  i18n/
+    locales.js          the locale table + the path/asset-prefix maths (also read by vite.config.js)
+    en.js  hr.js        the two dictionaries — every user-visible string
+    lorem.js            every placeholder paragraph, shared by both dictionaries
+    index.jsx           <LangProvider>, useLang(), and the same-shape assertion
   palette.js            the two band colours as hex, for <Divider>'s inline SVG
   images.js             asset() and responsivePhoto() — the ONLY way to reference public/
-  components/           Navbar, Footer, Divider, Reveal, Photo, Sprig
+  components/           Navbar, Footer, Divider, Reveal, Photo, Sprig, Logo, LangSwitch, Seo
   sections/             one file per section, in page order
 public/                 copied verbatim into dist/ — fonts, favicon, robots, sitemap, 404, manifest
 scripts/                Python one-offs, run by hand
 .github/workflows/      deploy.yml — build and publish to GitHub Pages on push to main
 ```
+
+## Two languages
+
+The site is prerendered **once per language**, from one set of components and two dictionaries:
+
+| URL | file | `<html lang>` | dictionary |
+| --- | --- | --- | --- |
+| `/` | `dist/index.html` | `en` | `src/i18n/en.js` |
+| `/hr/` | `dist/hr/index.html` | `hr` | `src/i18n/hr.js` |
+
+**The language comes from the route, never from state.** `src/routes.jsx` mounts `<App lang>` once per
+language; `<LangProvider>` puts the matching dictionary on context; `useLang()` reads it. There is no
+toggle, no `localStorage`, and nothing that can differ between the prerendered markup and the first client
+render — which is the same hydration-mismatch rule the hard-coded seam geometry follows.
+
+The switcher is a plain `<a>`, not a router `<Link>`: changing language is a change of *document*, and a
+full navigation is what gets the right prerendered HTML, the right `lang` attribute and the right
+canonical.
+
+### Writing a string
+
+**No user-visible text belongs in a component.** Put it in `src/i18n/en.js` and `src/i18n/hr.js`, under the
+same key, and read it through `useLang()`:
+
+```jsx
+const { t } = useLang()
+…
+<h2 className="section-heading">{t.services.heading}</h2>
+```
+
+`src/i18n/index.jsx` asserts at module load that the two dictionaries have **identical shapes** — same
+keys, same array lengths, same types. Because the build prerenders the page, a mismatch throws during
+`npm run build` and names the exact key (`i18n: hr.js is missing .nav.faq`). This is deliberate: React
+renders `undefined` as nothing, so without the check a typo in `hr.js` would ship a Croatian page with a
+silently empty heading. There is no typechecker here to catch it any other way.
+
+Lists that pair text with something non-textual are keyed by **id, not index** — `services.items.tutoring`
+lines up with the icon in `Services.jsx` and `rates.items.editing` with the figure in `Rates.jsx`. Do not
+turn them back into parallel arrays; the first reorder would silently mis-pair them.
+
+### What is translated, and what is not
+
+Translated: section names, the four services and who they are for, rate units, the questions in the FAQ,
+and all UI chrome.
+
+**Not translated, and not to be:**
+
+- **The wordmark.** "Word & Riječ" is the business name and reads the same on both pages.
+- **Every body paragraph.** They are lorem, and both dictionaries import the *same* strings from
+  `src/i18n/lorem.js`. This is the "Don't invent" rule at the bottom of this file, applied to a second
+  language where it bites harder: Croatian lorem is indistinguishable from real Croatian to a reader who
+  does not speak it. `grep -rn "LOREM\." src/i18n/` lists everything still outstanding; when `lorem.js` is
+  empty, the copy is done.
+
+### Adding a third language
+
+A dictionary in `src/i18n/`, an entry in `LANGS` and the tables in `src/i18n/locales.js`, and a `<url>`
+block in `public/sitemap.xml`. The route, the hreflang set, the switcher and the asset prefixes are all
+generated from that. Nothing else needs touching.
+
+### The trap: relative `base` and a page one directory down
+
+`vite.config.js` sets `base: './'` (see Deployment — it is load-bearing), so everything Vite emits is
+**document-relative**: `./assets/app.js`, `./fonts/…`, `./favicon.svg`. That is correct at the root and
+**wrong inside `/hr/`**, where `./assets/app.js` resolves to `/hr/assets/app.js` and 404s. vite-react-ssg
+writes the same template to both depths and does not rewrite it.
+
+Two halves of one fix, and they must stay in step:
+
+1. **Asset refs Vite writes** are repaired by the `onPageRendered` hook in `vite.config.js`, which rewrites
+   `href="./` / `src="./` to the right number of `../` for the page's depth.
+2. **Assets our own code references** out of `public/` go through `useLang()`'s bound `asset()` /
+   `responsivePhoto()`, which take the prefix from `assetPrefix()` in `src/i18n/locales.js`.
+
+The language switcher's href has the same problem and the same answer — `localeHref()`, which returns
+`./hr/` going down and `../` coming back up. **Never write a root-relative `/hr/` anywhere**; a leading
+slash escapes the github.io project-pages sub-path exactly the way a `/asset` path does.
+
 
 ## Bands and seams
 
@@ -261,23 +355,35 @@ usually a section that has drifted from the system.
   `currentColor` (`dandelion-deep` on the light bands, `dandelion` in the footer). It stands in for a logo, and should be replaced
   wholesale if a real one arrives.
 - **`<Divider>`** — see "Bands and seams".
+- **`<LangSwitch>`** is the language switcher: one compact link showing the language it switches *to*. It
+  stays visible at every width, including below `md` where the nav links are hidden — it is the only way
+  to reach the other language, and hiding it would strand a Croatian visitor on the English page.
+- **`<Seo>`** renders everything in `<head>` that differs between the two languages. See SEO below.
 
 Motion is deliberately slow and small: `animate-breathe` (11s) and `animate-sway` (9s), plus the reveal
 transitions. All of it is disabled under `prefers-reduced-motion`, and anything new must be too.
 
 ## Where the content lives
 
+**Almost all of it is now in `src/i18n/en.js` and `hr.js`**, under the same key in both. A component holds
+only what is not text.
+
 | what | where |
 | --- | --- |
-| Business name, contact details, location, social links, canonical URL | `src/siteInfo.js` |
-| Nav links and the Services submenu | `src/components/Navbar.jsx` |
-| Footer link list | `src/components/Footer.jsx` |
-| The four services | the `services` array in `src/sections/Services.jsx` |
-| The three how-it-works steps | the `steps` array in `src/sections/Approach.jsx` |
-| Testimonials | the `quotes` array in `src/sections/Testimonials.jsx` |
-| Prices | the `rates` array in `src/sections/Rates.jsx` |
-| Questions and answers | the `faqs` array in `src/sections/FAQ.jsx` |
-| `<title>`, meta description, Open Graph, JSON-LD | `index.html` (its own copy — edit alongside `siteInfo.js`) |
+| Business name, email, phone, social links, canonical URL | `src/siteInfo.js` |
+| Tagline, what the business does, where it works | `site` in each dictionary |
+| Nav labels and the Services submenu | `nav` in each dictionary |
+| Footer link labels and column headings | `nav` / `footer` in each dictionary |
+| The four services — titles, audiences, descriptions | `services.items` in each dictionary |
+| The four service **icons** | the `icons` map in `src/sections/Services.jsx`, keyed by the same ids |
+| The three how-it-works steps | `approach.steps` in each dictionary |
+| The step **numerals** (`01`–`03`) | `numerals` in `src/sections/Approach.jsx` |
+| Testimonials | `testimonials.quotes` in each dictionary |
+| Rate names and units | `rates.items` in each dictionary |
+| **Prices** | the `prices` map in `src/sections/Rates.jsx`, keyed by the same ids |
+| Questions and answers | `faq.items` in each dictionary |
+| Every placeholder paragraph | `src/i18n/lorem.js`, shared by both dictionaries |
+| `<title>`, meta description, Open Graph, JSON-LD | `meta` in each dictionary, rendered by `src/components/Seo.jsx` |
 
 Section IDs, used by every anchor link: `#home` `#services` `#about` `#approach` `#testimonials` `#rates`
 `#faq` `#contact` `#footer`.
@@ -287,11 +393,21 @@ Section IDs, used by every anchor link: `#home` `#services` `#about` `#approach`
 1. Export to **WebP** at several widths — the convention from the sibling sites is roughly 400 / 700 / 1100
    for in-page images, and a `-1200` for anything used as an OG image.
 2. Name them `<slug>-<width>.webp` and drop them in `public/images/`.
-3. In the section: `const shot = responsivePhoto('slug', [400, 700, 1100])`, then
-   `<Photo {...shot} sizes="(min-width: 1024px) 40vw, 100vw" alt="…" />`.
+3. In the section, take `responsivePhoto` **off `useLang()`** — the bound copy, which knows how deep the
+   current locale's page sits:
+
+   ```jsx
+   const { t, responsivePhoto } = useLang()
+   const shot = responsivePhoto('slug', [400, 700, 1100])
+   …
+   <Photo {...shot} sizes="(min-width: 1024px) 40vw, 100vw" alt={t.about.photoAlt} />
+   ```
 
 Never write a literal `/images/…` path or use `import.meta.env.BASE_URL`. Both break under the GitHub Pages
-sub-path; `src/images.js` explains why in detail.
+sub-path; `src/images.js` explains why in detail. Importing `responsivePhoto` directly from `src/images.js`
+and calling it without a prefix is the bilingual version of the same mistake — it resolves correctly at `/`
+and 404s under `/hr/`. And `alt` is user-visible text, so it comes from the dictionary like everything
+else.
 
 ## Deployment
 
@@ -309,17 +425,27 @@ the project-pages URL (`xarlos89.github.io/word-and-rijec/`) stays live as a fal
 `/asset` path 404s under that sub-path. The relative base means one build serves both — don't "tidy" it to
 `/`. Everything emitted is document-relative to match; see `src/images.js`.
 
-### The origin is hard-coded in five places
+Since the site became bilingual there are **two page depths**, and document-relative paths do not survive
+the second one on their own. The `onPageRendered` hook in `vite.config.js` and `assetPrefix()` in
+`src/i18n/locales.js` are what make `/hr/` work; both are explained under "Two languages → The trap". If
+you ever add a page deeper than one directory, they already handle it — they count segments rather than
+special-casing `hr`.
+
+### The origin is hard-coded in four places
 
 These are static files that cannot import from `siteInfo.js`, so a domain change means editing all of them
 together:
 
 1. `src/siteInfo.js` → `site.url`
-2. `index.html` → `<link rel="canonical">`, `og:url`, and the `@id`/`url` fields in the JSON-LD
-3. `public/sitemap.xml` → `<loc>`
-4. `public/404.html` → the favicon link, both `@font-face` sources and the home-page link. These have to be
-   absolute: GitHub Pages serves this file for unknown paths at *any* depth, where a relative path breaks
-5. `public/CNAME` → the bare domain, no scheme, no trailing slash
+2. `public/sitemap.xml` → both `<loc>` values and every `<xhtml:link href>`
+3. `public/404.html` → the favicon link, both `@font-face` sources and **both** home-page links (English
+   and Croatian). These have to be absolute: GitHub Pages serves this file for unknown paths at *any*
+   depth, where a relative path breaks
+4. `public/CNAME` → the bare domain, no scheme, no trailing slash
+
+`index.html` used to be on this list and no longer is: the canonical, `og:url`, the hreflang set and the
+JSON-LD `@id`s are all derived from `site.url` by `src/components/Seo.jsx`. That is one fewer place to
+forget — don't type the origin back into the template.
 
 `grep -rn "word-and-rijec" --exclude-dir=node_modules --exclude-dir=dist .` finds the lot.
 
@@ -350,11 +476,19 @@ that is almost always a registrar that wrote them against a subdomain instead of
 
 ## SEO
 
-`index.html` carries the title, description, Open Graph, Twitter card and a small JSON-LD graph
-(`WebSite` + `ProfessionalService` with an `OfferCatalog` of the four services). The JSON-LD deliberately
-claims **only what is actually true**: the business name, the services, and the two languages. No person,
-address, opening hours, price, rating or review is asserted, because none of it is known. Add to it as real
-details arrive — never to pad it out.
+**`src/components/Seo.jsx` carries everything that differs between the two pages**: the title, the
+description, the canonical, the hreflang set, Open Graph, the Twitter card and a small JSON-LD graph
+(`WebSite` + `ProfessionalService` with an `OfferCatalog` of the four services). `index.html` keeps only
+what is identical on both — charset, viewport, the `robots` tag, the icons, the manifest and the font
+preloads. **Do not put a per-language tag back in the template**: it would be emitted twice on every page.
+
+The JSON-LD deliberately claims **only what is actually true**: the business name, the services, and the
+two languages. No person, address, opening hours, price, rating or review is asserted, because none of it
+is known. Add to it as real details arrive — never to pad it out.
+
+The hreflang set is **reciprocal and self-inclusive** — each page lists both languages *including itself*,
+plus `x-default` on the English root — because Google discards a set that does not point back at itself.
+`public/sitemap.xml` repeats the same set per `<url>`. If you add a language, those two have to agree.
 
 Absent on purpose, and each needs its own commit when the thing exists: `og:image` (no artwork yet; a
 missing image is worse than no tag), the raster favicons (run `scripts/build-icons.py`, then uncomment the
@@ -371,8 +505,13 @@ be indexed on the real domain rather than a throwaway github.io URL, and the rea
 of it. Flipping these two is the *launch* switch, not the *domain* switch.
 
 To launch, in one commit: delete the `robots` meta tag, change `robots.txt` to `Allow: /`, uncomment its
-`Sitemap:` line, and bump `<lastmod>` in `public/sitemap.xml`. Do it in the same commit that ships real
-copy, not before.
+`Sitemap:` line, and bump **both** `<lastmod>` values in `public/sitemap.xml`. Do it in the same commit
+that ships real copy, not before.
+
+The `robots` tag is in `index.html` rather than `Seo.jsx` on purpose: it applies to both languages, so the
+launch switch stays one edit rather than two. "Real copy" now means real copy **in both languages** —
+`src/i18n/lorem.js` empty, not just the English side filled in. Launching with a Croatian page full of
+English lorem is worse than not launching the Croatian page at all.
 
 ## What's placeholder
 
@@ -381,26 +520,41 @@ Assume everything is, unless it is in this list of things that are real:
 - The business name, "Word & Riječ", the domain `word-and-rijec.com`, and the two languages.
 - The four services: tutoring, language lessons, editing & proofreading, copywriting.
 - The stack, the design system, the build and the deploy workflow.
+- The **bilingual machinery** — the two routes, the dictionaries, the switcher, the hreflang. The Croatian
+  translations of the section names, the services, the rate units and the FAQ questions are real Croatian,
+  but they are a translation of scaffold copy, not of anything the client has written.
 
 Placeholder, and to be replaced before anything is shown to the public:
 
-- **All body copy.** Every paragraph on the page is lorem ipsum.
-- **`src/siteInfo.js`** — `hello@example.com`, "Placeholder Name", the tagline, "Online, worldwide". No
-  phone number and no social links; the footer and the contact section hide those fields while they are
-  empty, so leaving them blank is safe. `site.url` is now real.
-- **Rates.** Every figure in `Rates.jsx` is `€00` and was invented to show the layout. Nothing has been
-  agreed.
+- **All body copy, in both languages.** Every paragraph on both pages is lorem ipsum, and both dictionaries
+  import the same strings from `src/i18n/lorem.js` rather than each carrying their own. `grep -rn "LOREM\."
+  src/i18n/` is the outstanding-work list; when `lorem.js` is empty, the copy is done.
+- **`src/siteInfo.js`** — `hello@example.com`, "Placeholder Name". No phone number and no social links; the
+  footer and the contact section hide those fields while they are empty, so leaving them blank is safe.
+  `site.url` is now real.
+- **The tagline and "Online, worldwide"**, now in `site` in each dictionary rather than `siteInfo.js`.
+- **Rates.** Every figure in the `prices` map in `Rates.jsx` is `€00` and was invented to show the layout.
+  Nothing has been agreed. The figures are shared by both languages; only the names and units are
+  translated.
 - **Testimonials.** Not real quotes from real students. Delete the section from `App.jsx` (and re-pair the
-  dividers around it) rather than launching with invented ones.
-- **FAQ answers.** The questions are the ones a language service is usually asked; the answers are lorem.
+  dividers around it) rather than launching with invented ones — and delete `testimonials` from *both*
+  dictionaries, or the same-shape assertion will pass while the section is gone and quietly rot.
+- **FAQ answers.** The questions are the ones a language service is usually asked, in both languages; the
+  answers are lorem in both.
 - **Photography.** None. Every `<Photo>` renders its placeholder state.
 - **Logo.** `<Logo>`, `<Sprig>` and `public/favicon.svg` are drawn here, not commissioned. See "The
   logo" above — the concept is right, the execution should go to an illustrator.
 
 Two known gaps in the build itself, neither a bug to be surprised by:
 
-- **No mobile nav.** Below `md` the navbar keeps the wordmark and the "Get in touch" button and hides the
-  links entirely. A drawer or sheet is still to be built.
+- **No mobile nav.** Below `md` the navbar keeps the flower mark, the language switcher and the "Get in
+  touch" button, and hides the links entirely. Below `sm` the wordmark text goes too — the pill cannot hold
+  four things on a 320px phone, and the `h1` says the name a few pixels further down. A drawer or sheet is
+  still to be built, and it is the thing that would let the wordmark come back.
+
+  Watch the width when you touch the navbar: the Croatian labels are longer than the English ones ("Kako to
+  funkcionira" against "How it works"), so 768px — where the links appear — is the tightest point, not the
+  phone widths.
 - **No contact form.** A form needs a backend and this is a static build; the contact section is a mailto
   link. A hosted form service would be the small next step.
 
@@ -410,3 +564,9 @@ The client has not supplied copy, prices, credentials or testimonials. When fill
 what she actually sends. If a section has no real content to put in it, remove the section rather than
 writing plausible-sounding filler — a page that says less is recoverable, a page that says something untrue
 about her business is not.
+
+**This applies twice over to the Croatian page.** Do not translate her English copy into Croatian on her
+behalf, and do not write Croatian copy to fill the gap: she is a Croatian language professional, the
+Croatian page is the one her Croatian clients will read, and a fluent-sounding paragraph she did not write
+is the worst possible thing to put in front of them. Ask for both languages, or leave the lorem where it
+is — it is at least visibly unfinished.

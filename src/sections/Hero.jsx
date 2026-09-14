@@ -1,10 +1,7 @@
 import { site } from '../siteInfo'
+import { useLang } from '../i18n'
 import Sprig from '../components/Sprig'
 import Logo from '../components/Logo'
-
-// The three things a visitor is meant to take in before scrolling. Real
-// service names; everything else in this section is lorem.
-const offer = ['Tutoring & lessons', 'Editing & proofreading', 'Copywriting']
 
 /**
  * A band like every other band: one flat tone, a curved seam below it, and
@@ -17,11 +14,16 @@ const offer = ['Tutoring & lessons', 'Editing & proofreading', 'Copywriting']
  * colour and one style — no italic, no second colour on "Riječ"; the size of
  * it is what makes it the loudest thing on the page.
  *
+ * The three items under the buttons are the real service names, from the
+ * dictionary; everything else in this section is still lorem.
+ *
  * Laid out mobile-first: one left edge that every element lines up on, a
  * headline that wraps on its own below `sm`, and full-width stacked buttons
  * so nothing sits ragged on a phone.
  */
 export default function Hero() {
+  const { t } = useLang()
+
   return (
     <section
       id="home"
@@ -31,7 +33,7 @@ export default function Hero() {
         <div className="max-w-3xl">
           <div className="flex items-center gap-3 mb-6">
             <Sprig className="w-5 h-5 text-dandelion-deep animate-sway" />
-            <p className="label">{site.what}</p>
+            <p className="label">{t.site.what}</p>
           </div>
 
           {/* The site name is the `h1` for the same reason it is the largest
@@ -53,28 +55,26 @@ export default function Hero() {
             className="font-sans font-light text-ink-soft text-balance leading-[1.4] mb-7 sm:mb-8"
             style={{ fontSize: 'clamp(1.15rem, 2.8vw, 1.6rem)' }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit
+            {t.hero.lede}
           </p>
 
           <p className="font-sans text-[17px] sm:text-xl text-ink-soft leading-[1.75] max-w-xl mb-9 sm:mb-10">
-            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-            nisi ut aliquip ex ea commodo consequat.
+            {t.hero.body}
           </p>
 
           {/* Stacked and full-width on a phone, side by side from sm up */}
           <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-4 mb-11 sm:mb-14">
             <a href="#contact" className="btn-primary w-full sm:w-auto">
-              Get in touch
+              {t.hero.ctaPrimary}
             </a>
             <a href="#services" className="btn-ghost w-full sm:w-auto">
-              See what I offer
+              {t.hero.ctaSecondary}
             </a>
           </div>
 
           {/* One item per line on a phone, so the dots keep a single edge */}
           <ul className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-x-8 sm:gap-y-3">
-            {offer.map((item) => (
+            {t.hero.offer.map((item) => (
               <li key={item} className="flex items-center gap-2.5 font-sans text-[14px] sm:text-[13px] text-ink-soft">
                 <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-dandelion shrink-0" />
                 {item}

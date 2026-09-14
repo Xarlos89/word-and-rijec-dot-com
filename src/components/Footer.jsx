@@ -1,17 +1,24 @@
 import { site } from '../siteInfo'
+import { useLang } from '../i18n'
 import Logo from './Logo'
+import LangSwitch from './LangSwitch'
 
-const explore = [
-  { label: 'Services', href: '#services' },
-  { label: 'About', href: '#about' },
-  { label: 'How it works', href: '#approach' },
-  { label: 'Testimonials', href: '#testimonials' },
-  { label: 'Rates', href: '#rates' },
-  { label: 'FAQ', href: '#faq' },
-  { label: 'Get in touch', href: '#contact' },
-]
+function exploreFor(t) {
+  return [
+    { label: t.nav.services, href: '#services' },
+    { label: t.nav.about, href: '#about' },
+    { label: t.nav.approach, href: '#approach' },
+    { label: t.nav.testimonials, href: '#testimonials' },
+    { label: t.nav.rates, href: '#rates' },
+    { label: t.nav.faq, href: '#faq' },
+    { label: t.nav.contact, href: '#contact' },
+  ]
+}
 
 export default function Footer() {
+  const { t } = useLang()
+  const explore = exploreFor(t)
+
   return (
     <footer id="footer" className="bg-mint text-ink-soft font-sans">
       <div className="max-w-5xl mx-auto px-6 sm:px-8 pt-16 pb-14 grid sm:grid-cols-3 gap-12">
@@ -22,15 +29,14 @@ export default function Footer() {
               {site.nameFirst} &amp; {site.nameSecond}
             </span>
           </div>
-          <p className="font-sans font-light text-[15px] text-ink-soft mb-4">{site.tagline}</p>
+          <p className="font-sans font-light text-[15px] text-ink-soft mb-4">{t.site.tagline}</p>
           <p className="text-[14px] leading-[1.8] text-ink-soft max-w-xs">
-            {site.what}. Lorem ipsum dolor sit amet, consectetur adipiscing
-            elit, sed do eiusmod tempor incididunt.
+            {t.site.what}. {t.footer.blurb}
           </p>
         </div>
 
         <div>
-          <div className="label mb-5">Explore</div>
+          <div className="label mb-5">{t.footer.exploreLabel}</div>
           <nav className="flex flex-col gap-2.5 text-[14px] text-ink-soft">
             {explore.map(({ label, href }) => (
               <a key={href} href={href} className="hover:text-pine transition-colors duration-300 w-fit">
@@ -41,7 +47,7 @@ export default function Footer() {
         </div>
 
         <div>
-          <div className="label mb-5">Get in touch</div>
+          <div className="label mb-5">{t.footer.contactLabel}</div>
           <ul className="text-[14px] space-y-2.5 text-ink-soft">
             <li>
               <a href={site.emailHref} className="hover:text-pine transition-colors duration-300">
@@ -56,8 +62,15 @@ export default function Footer() {
                 </a>
               </li>
             )}
-            <li className="pt-2 leading-[1.8] text-ink-soft">{site.location}</li>
+            <li className="pt-2 leading-[1.8] text-ink-soft">{t.site.location}</li>
           </ul>
+
+          {/* The switcher again at the bottom of the page, so it is reachable
+              without scrolling back up to the navbar */}
+          <div className="mt-7">
+            <div className="label mb-3">{t.switcher.label}</div>
+            <LangSwitch />
+          </div>
         </div>
       </div>
 
@@ -65,7 +78,7 @@ export default function Footer() {
         <p className="text-[12px] text-ink-soft">
           © {new Date().getFullYear()} {site.name}.
         </p>
-        <p className="text-[12px] text-ink-soft">{site.what}.</p>
+        <p className="text-[12px] text-ink-soft">{t.site.what}.</p>
       </div>
     </footer>
   )

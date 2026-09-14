@@ -4,97 +4,51 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Primary meta. Everything here is provisional: there is no domain yet,
-         the copy on the page is lorem, and the description below is a
-         placeholder written from what the business does rather than from
-         anything the client has said. Rewrite it before launch and keep it
-         under ~155 characters so Google shows all of it. -->
-    <title>Word &amp; Riječ — English and Croatian language services</title>
-    <meta name="description" content="English and Croatian language services: tutoring, language lessons, editing, proofreading and copywriting." />
+    <!-- ONLY THE TAGS THAT ARE IDENTICAL ON BOTH LANGUAGE PAGES LIVE HERE.
+         The site is prerendered twice, as / (English) and /hr/ (Croatian),
+         and everything that differs between them — <title>, the description,
+         the canonical, hreflang, Open Graph, Twitter and the JSON-LD graph —
+         is rendered per route by src/components/Seo.jsx. Adding any of those
+         back here would emit it twice on every page.
+
+         The `lang` attribute above is the English default; Seo.jsx overwrites
+         it per locale, so the Croatian page ships lang="hr". -->
 
     <!-- NOINDEX WHILE THIS IS A TEMPLATE. The domain is live, but the copy on
          the page is still lorem ipsum — letting Google index it now means the
          real site launches on top of an indexed placeholder, on the real
          domain, which is worse than the github.io case this tag was first
          written for. Delete this tag and the Disallow in public/robots.txt in
-         the same commit that ships real copy — see CLAUDE.md → SEO. -->
+         the same commit that ships real copy — see CLAUDE.md → SEO.
+
+         It is here rather than in Seo.jsx deliberately: it applies to both
+         languages, and the launch switch should be one edit, not two. -->
     <meta name="robots" content="noindex, nofollow" />
 
-    <link rel="canonical" href="https://word-and-rijec.com/" />
     <meta name="theme-color" content="#B8D6B2" />
 
     <!-- Icons. favicon.svg is the master; run scripts/build-icons.py to derive
          the PNGs (iOS home screen, the manifest, crawlers that will not
-         rasterise an SVG) and then uncomment the three lines below. -->
+         rasterise an SVG) and then uncomment the two lines below. -->
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <!-- <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png" /> -->
     <!-- <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" /> -->
     <link rel="manifest" href="./site.webmanifest" />
 
-    <!-- Open Graph. og:image is deliberately absent — there is no artwork yet,
-         and a link to a missing image is worse than no tag. Add
-         public/og-image.jpg (1200x630) and the og:image/twitter:image tags
-         together. -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Word &amp; Riječ" />
-    <meta property="og:title" content="Word &amp; Riječ — English and Croatian language services" />
-    <meta property="og:description" content="Tutoring, language lessons, editing, proofreading and copywriting in English and Croatian." />
-    <meta property="og:url" content="https://word-and-rijec.com/" />
-    <meta property="og:locale" content="en_GB" />
-    <meta property="og:locale:alternate" content="hr_HR" />
-
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Word &amp; Riječ — English and Croatian language services" />
-    <meta name="twitter:description" content="Tutoring, language lessons, editing, proofreading and copywriting in English and Croatian." />
-
     <!-- Fonts — self-hosted, see public/fonts/ and the @font-face blocks in
          src/index.css. Only the faces the first screen actually needs are
          preloaded: Valley Sans for the wordmark, its latin-ext companion
          (the "č" in "Riječ" comes out of that file, in the h1), and Nunito
-         for the body. The Nunito latin-ext loads on demand. -->
+         for the body. The Nunito latin-ext loads on demand.
+
+         The latin-ext half matters more now, not less: the Croatian page is
+         full of č, ć, š, ž and đ from the first heading down. -->
     <link rel="preload" as="font" type="font/woff2" href="./fonts/valleysans-latin.woff2" crossorigin />
     <link rel="preload" as="font" type="font/woff2" href="./fonts/valleysans-latin-ext.woff2" crossorigin />
     <link rel="preload" as="font" type="font/woff2" href="./fonts/nunito-latin.woff2" crossorigin />
 
-    <!-- Structured data. Kept to the few facts that are actually true: the
-         name of the business, what it sells, and the languages it works in.
-         Nothing about a person, a place, an opening time, a price or a review
-         is known yet, so none of it is claimed here. Fill this out as the real
-         details arrive, and keep it in sync with src/siteInfo.js. -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@graph": [
-        {
-          "@type": "WebSite",
-          "@id": "https://word-and-rijec.com/#website",
-          "url": "https://word-and-rijec.com/",
-          "name": "Word & Riječ",
-          "publisher": { "@id": "https://word-and-rijec.com/#business" },
-          "inLanguage": ["en", "hr"]
-        },
-        {
-          "@type": ["ProfessionalService", "LocalBusiness"],
-          "@id": "https://word-and-rijec.com/#business",
-          "name": "Word & Riječ",
-          "url": "https://word-and-rijec.com/",
-          "description": "English and Croatian language services: tutoring, language lessons, editing, proofreading and copywriting.",
-          "knowsLanguage": ["en", "hr"],
-          "availableLanguage": ["en", "hr"],
-          "hasOfferCatalog": {
-            "@type": "OfferCatalog",
-            "name": "Language services",
-            "itemListElement": [
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Tutoring" } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Language lessons" } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Editing and proofreading" } },
-              { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Copywriting" } }
-            ]
-          }
-        }
-      ]
-    }
-    </script>
+    <!-- These './' paths are rewritten to '../' for /hr/index.html by the
+         onPageRendered hook in vite.config.js — see the note there. -->
   </head>
   <body>
     <div id="root"></div>
