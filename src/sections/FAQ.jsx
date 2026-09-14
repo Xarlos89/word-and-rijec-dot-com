@@ -1,16 +1,9 @@
 import { useState } from 'react'
 import Reveal from '../components/Reveal'
+import { useLang } from '../i18n'
 
-// Placeholder questions and answers — the questions are the ones a language
-// service is usually asked, the answers are lorem.
-const faqs = [
-  { q: 'Lorem ipsum dolor sit amet?', a: 'Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.' },
-  { q: 'Do you teach online or in person?', a: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-  { q: 'How long is a lesson?', a: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' },
-  { q: 'What level do I need to start?', a: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.' },
-  { q: 'How quickly can you turn around editing work?', a: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.' },
-  { q: 'What happens if I need to cancel?', a: 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.' },
-]
+// The questions are the ones a language service is usually asked and are
+// translated; the answers are all still lorem. Both live in src/i18n/.
 
 function FAQItem({ q, a }) {
   const [open, setOpen] = useState(false)
@@ -44,18 +37,20 @@ function FAQItem({ q, a }) {
 }
 
 export default function FAQ() {
+  const { t } = useLang()
+
   return (
     <section id="faq" className="bg-haze py-24 sm:py-32">
       <div className="max-w-5xl mx-auto px-6 sm:px-8">
         <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-12 lg:gap-16 items-start">
           <Reveal>
-            <h2 className="section-heading mb-3">FAQ</h2>
-            <p className="section-sub">Good to know</p>
+            <h2 className="section-heading mb-3">{t.faq.heading}</h2>
+            <p className="section-sub">{t.faq.sub}</p>
           </Reveal>
 
           <Reveal delay={110}>
             <div>
-              {faqs.map(({ q, a }) => (
+              {t.faq.items.map(({ q, a }) => (
                 <FAQItem key={q} q={q} a={a} />
               ))}
             </div>

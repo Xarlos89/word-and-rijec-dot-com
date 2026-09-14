@@ -27,13 +27,20 @@ export default {
         // the text colour on `pine`. Never a section background.
         cloud: '#F4F5F1',
 
-        // The immortelle bloom: dandelion yellow. `dandelion` is the primary
-        // button — a ground for `ink` type (8.9:1) — and `dandelion-deep` is
-        // the only form that can be type on a light ground: prices on a
-        // `cloud` card (6.5:1), the numerals in Approach, the ring around the
-        // primary button, and its hover fill.
+        // The immortelle bloom: a soft, pastel dandelion yellow. `dandelion`
+        // is the primary button — a ground for `ink` type (9.7:1) — and
+        // `dandelion-deep` is the only form that can be type on a light
+        // ground: prices on a `cloud` card (6.5:1), the numerals in Approach,
+        // the ring around the primary button, and its hover fill.
+        //
+        // The bloom was pulled back from a bright #F0C93E to this creamier
+        // tone: same 45° hue, less saturation, more light. It only moves in
+        // that direction safely — every use of it is a GROUND, so going paler
+        // raises the contrast of the type sitting on it. `deep` did not move
+        // with it: it is the button's ring, and at 3.2:1 on `haze` it is the
+        // one value here with no headroom left.
         dandelion: {
-          DEFAULT: '#F0C93E',
+          DEFAULT: '#EDD382',
           deep: '#6E540A',
         },
 

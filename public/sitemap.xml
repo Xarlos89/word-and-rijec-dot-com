@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- One page, one URL. Nothing is crawling this yet: robots.txt is
-     Disallow-all and index.html is noindex until real copy ships. Bump
-     <lastmod> then, and uncomment the Sitemap line in robots.txt. -->
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<!-- Two pages now, one per language, each listing itself and its alternate.
+     Google wants the hreflang set to be RECIPROCAL and to include the page
+     itself, which is why both <url> blocks carry the same three <xhtml:link>
+     entries; they mirror what src/components/Seo.jsx puts in each page's head.
+
+     Nothing is crawling this yet: robots.txt is Disallow-all and index.html is
+     noindex until real copy ships. Bump both <lastmod> values then, and
+     uncomment the Sitemap line in robots.txt. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://word-and-rijec.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://word-and-rijec.com/" />
+    <xhtml:link rel="alternate" hreflang="hr" href="https://word-and-rijec.com/hr/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://word-and-rijec.com/" />
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://word-and-rijec.com/hr/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://word-and-rijec.com/" />
+    <xhtml:link rel="alternate" hreflang="hr" href="https://word-and-rijec.com/hr/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://word-and-rijec.com/" />
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
