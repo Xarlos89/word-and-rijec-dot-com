@@ -284,7 +284,7 @@ sub-path; `src/images.js` explains why in detail.
 Push to `main` → `.github/workflows/deploy.yml` runs `npm ci && npm run build` and publishes `dist/` to
 GitHub Pages. The workflow sets `enablement: true`, so it turns Pages on rather than failing if it is off.
 
-The site is served at **https://word-in-rijec.com/**.
+The site is served at **https://word-and-rijec.com/**.
 
 `public/CNAME` holds the bare domain and is copied into `dist/` by the build. **That file is what keeps the
 custom domain attached** — GitHub Pages reads it from each published artifact, and deleting it resets the
@@ -307,11 +307,11 @@ together:
    absolute: GitHub Pages serves this file for unknown paths at *any* depth, where a relative path breaks
 5. `public/CNAME` → the bare domain, no scheme, no trailing slash
 
-`grep -rn "word-in-rijec" --exclude-dir=node_modules --exclude-dir=dist .` finds the lot.
+`grep -rn "word-and-rijec" --exclude-dir=node_modules --exclude-dir=dist .` finds the lot.
 
 ### DNS, one time
 
-At the registrar, for the apex `word-in-rijec.com`, four A records and four AAAA records pointing at
+At the registrar, for the apex `word-and-rijec.com`, four A records and four AAAA records pointing at
 GitHub Pages:
 
 ```
@@ -326,7 +326,7 @@ AAAA  @   2606:50c0:8003::153
 CNAME www xarlos89.github.io.
 ```
 
-Then in the repo's **Settings → Pages**: set the custom domain to `word-in-rijec.com` (it should already be
+Then in the repo's **Settings → Pages**: set the custom domain to `word-and-rijec.com` (it should already be
 picked up from `public/CNAME` after the first deploy), wait for the DNS check to pass, and tick **Enforce
 HTTPS** — the certificate is issued by GitHub and can take up to an hour after DNS resolves. GitHub
 redirects `www` to the apex automatically once the `www` CNAME is in place.
@@ -364,7 +364,7 @@ copy, not before.
 
 Assume everything is, unless it is in this list of things that are real:
 
-- The business name, "Word & Riječ", the domain `word-in-rijec.com`, and the two languages.
+- The business name, "Word & Riječ", the domain `word-and-rijec.com`, and the two languages.
 - The four services: tutoring, language lessons, editing & proofreading, copywriting.
 - The stack, the design system, the build and the deploy workflow.
 

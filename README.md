@@ -13,7 +13,7 @@ npm run build    # → dist/
 npm run preview  # serve dist/ locally
 ```
 
-Deployed to GitHub Pages at **https://word-in-rijec.com/**.
+Deployed to GitHub Pages at **https://word-and-rijec.com/**.
 
 **This is a template.** Every line of body copy is lorem ipsum, the contact details and rates are
 placeholders, and the page is deliberately `noindex` until real content ships — see CLAUDE.md → SEO before

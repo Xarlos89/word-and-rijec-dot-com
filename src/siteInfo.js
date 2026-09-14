@@ -36,5 +36,5 @@ export const site = {
   // public/sitemap.xml, public/404.html and public/CNAME all carry their own
   // copy of this — they are static files that cannot import it — so change
   // them together. See CLAUDE.md → Deployment.
-  url: 'https://word-in-rijec.com/',
+  url: 'https://word-and-rijec.com/',
 }

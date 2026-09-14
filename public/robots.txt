@@ -4,4 +4,4 @@
 User-agent: *
 Disallow: /
 
-# Sitemap: https://word-in-rijec.com/sitemap.xml
+# Sitemap: https://word-and-rijec.com/sitemap.xml
