@@ -96,16 +96,13 @@
      type here takes slightly negative tracking and a little more line-height
      than a normal sans would want. It has one weight, so `font-normal` is the
      only weight utility allowed on `.font-display`. */
+  /* There is no `-light` counterpart to this, or to any of the type classes
+     below. Nothing on the site sits on a dark ground any more — the page
+     alternates two light bands from the hero through to the footer, and
+     `pine` is a type colour only. If a dark section is ever added, the whole
+     light-on-dark set has to come back with it. */
   .label {
     @apply font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-pine;
-  }
-
-  /* The only light-on-dark class left. The page body alternates two light
-     bands now, and the footer is the one `pine` surface on the site — if you
-     add a dark section, the other `-light` variants have to come back with
-     it. */
-  .label-light {
-    @apply font-sans text-[11px] font-bold tracking-[0.22em] uppercase text-dandelion;
   }
 
   .section-heading {

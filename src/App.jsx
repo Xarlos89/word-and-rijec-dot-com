@@ -27,9 +27,10 @@ export default function App() {
     <>
       <Navbar />
       <main>
-        {/* The body of the page is two light bands and nothing else: mint,
-            haze, mint, haze, mint, haze. `pine` is not in the rotation — it
-            belongs to the footer, which is the one dark surface on the site.
+        {/* The page is two light bands and nothing else: mint, haze, mint,
+            haze, mint, haze — and the footer closes it back on mint, so the
+            alternation runs unbroken from the hero to the bottom of the page.
+            `pine` is not a background anywhere; it is a type colour only.
             If you add a section, it takes the colour the alternation gives
             it; do not introduce a third ground to make one stand out.
 
@@ -56,7 +57,7 @@ export default function App() {
         <Rates />
         <FAQ />
         <Contact />
-        <Divider from="haze" to="pine" shape="meadow" />
+        <Divider from="haze" to="mint" shape="meadow" />
       </main>
       <Footer />
     </>

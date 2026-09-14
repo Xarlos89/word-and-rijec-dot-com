@@ -63,9 +63,9 @@ scripts/                Python one-offs, run by hand
 
 ## Bands and seams
 
-The body of the page is **two light grounds that simply alternate**: `mint`, `haze`, `mint`, `haze`… and
-nothing else. `pine` is not in the rotation — it is the footer, and that is the only dark surface on the
-site. Where the colour changes, a `<Divider>` draws a soft curve between the two.
+The page is **two light grounds that simply alternate**: `mint`, `haze`, `mint`, `haze`… and nothing else,
+from the hero through to the footer. **`pine` is not a background anywhere** — it is a type colour only.
+Where the colour changes, a `<Divider>` grows the next band into the one above it.
 
 `App.jsx` is the only place the order is visible, and the `<Divider from= to=>` pairs must match their
 neighbours exactly: `from` is the colour of the section above, `to` the colour below. **Adding or
@@ -80,11 +80,12 @@ in the seam.
 | D | `haze` | Approach ("How it works") |
 | E | `mint` | Testimonials |
 | F | `haze` | Rates, FAQ, Contact |
-| — | `pine` | Footer |
+| G | `mint` | Footer — the alternation closes on it rather than dropping to a dark slab |
 
 A new section takes whatever colour the alternation gives it. **Do not introduce a third ground to make one
-section stand out** — an earlier draft put Testimonials on `pine` and it read as a random green slab
-interrupting the page. Emphasis comes from the cards and the dandelion button, not from a new background.
+section stand out.** Two earlier drafts tried it — Testimonials on `pine`, then the footer on `pine` — and
+both read as a random green slab interrupting the page. Emphasis comes from the cards and the dandelion
+button, not from a new background.
 
 ### The seams are immortelle flowers
 
@@ -110,16 +111,18 @@ would throw a hydration mismatch.
 They are not free: the four seam definitions carry ~200 circles, and the built page inlines 333 of them
 (~60KB raw, ~10KB gzipped). That is the budget already spent — if you add sprigs, take some out elsewhere.
 
-### The footer is the only light-on-dark surface
+### There is no light-on-dark surface at all
 
-Because no section is on `pine` any more, `.label-light` is the **only** `-light` class left in
-`src/index.css`. The earlier `.section-heading-light`, `.section-sub-light`, `.lede-light`,
-`.btn-primary-light`, `.btn-ghost-light` and `.soft-card-dark` have been deleted rather than left as dead
-CSS. If you ever add a dark section back, they have to come back with it — light-band type is unreadable
-on `pine`.
+Every `-light` class is gone from `src/index.css` — `.label-light` was the last, and it went when the
+footer moved onto `mint`. So did `.section-heading-light`, `.section-sub-light`, `.lede-light`,
+`.btn-primary-light`, `.btn-ghost-light` and `.soft-card-dark`, deleted rather than left as dead CSS.
 
-`<Photo tone="dark">` and the `pine-light` token survive for the same eventuality; nothing currently uses
-them.
+**If you ever add a dark section, that whole set has to come back with it** — light-band type is unreadable
+on `pine`, and nothing in the stylesheet will warn you.
+
+`<Photo tone="dark">` and the `pine-light` token survive for that eventuality; nothing currently uses
+either. The one remaining dark surface on the whole project is `public/404.html`, which is a standalone
+page with its own inline styles and is not part of this system.
 
 ## Design tokens (tailwind.config.js)
 
