@@ -5,10 +5,11 @@ import { LOREM } from './lorem'
  * module load, so a missing key fails `npm run build`.
  *
  * WHAT IS TRANSLATED HERE, AND WHAT IS NOT. The client has not sent copy in
- * either language, so nothing below invents any. Translated: the section
- * names, the four services, the audiences they are for, the rate units, the
- * questions a language service is actually asked, and the UI chrome. Still
- * `LOREM.x`, identical to the English side: every body paragraph. Croatian
+ * Croatian, so nothing below invents any. English copy has arrived for most
+ * of the page; it is NOT translated here on her behalf. Translated: the
+ * section names, the service and rate names, the short audience lists, the
+ * package labels, the FAQ questions, and the UI chrome. Still `LOREM.x`: every
+ * sentence or paragraph of her copy, waiting for her own Croatian. Croatian
  * lorem would be indistinguishable from real Croatian to a reader who does
  * not speak it, which is exactly the failure mode CLAUDE.md → "Don't invent"
  * is guarding against.
@@ -43,8 +44,8 @@ export default {
     faq: 'Česta pitanja',
     contact: 'Javite mi se',
     submenu: {
-      tutoring: 'Instrukcije',
       lessons: 'Satovi',
+      tutoring: 'Instrukcije',
       editing: 'Lektura i korektura',
       copywriting: 'Pisanje tekstova',
     },
@@ -52,7 +53,7 @@ export default {
 
   hero: {
     lede: LOREM.heroLede,
-    body: LOREM.heroBody,
+    body: [LOREM.heroBody, LOREM.heroBodyTwo],
     ctaPrimary: 'Javite mi se',
     ctaSecondary: 'Pogledajte što nudim',
     offer: ['Instrukcije i satovi', 'Lektura i korektura', 'Pisanje tekstova'],
@@ -61,26 +62,26 @@ export default {
   services: {
     heading: 'Usluge',
     sub: 'S čime vam mogu pomoći',
-    lede: LOREM.servicesLede,
     items: {
+      lessons: {
+        title: 'Satovi jezika',
+        // A sentence of her copy in English, so it waits for her Croatian.
+        audience: LOREM.lessonsAudience,
+        body: LOREM.serviceLessons,
+      },
       tutoring: {
         title: 'Instrukcije',
         audience: 'Učenicima i studentima',
         body: LOREM.serviceTutoring,
       },
-      lessons: {
-        title: 'Satovi jezika',
-        audience: 'Engleski i hrvatski, svaka razina',
-        body: LOREM.serviceLessons,
-      },
       editing: {
         title: 'Lektura i korektura',
-        audience: 'Diplomski radovi, članci, rukopisi',
+        audience: 'Diplomski radovi, članci, brošure',
         body: LOREM.serviceEditing,
       },
       copywriting: {
         title: 'Pisanje tekstova',
-        audience: 'Mrežne stranice, brošure, kampanje',
+        audience: 'Mrežne stranice, kampanje, brošure',
         body: LOREM.serviceCopywriting,
       },
     },
@@ -88,9 +89,8 @@ export default {
 
   about: {
     heading: 'O meni',
-    photoAlt: 'Portret instruktorice',
-    bodyOne: LOREM.aboutOne,
-    bodyTwo: LOREM.aboutTwo,
+    photoAlt: 'Rebekah Berković, portret',
+    body: LOREM.aboutBody,
   },
 
   approach: {
@@ -116,13 +116,22 @@ export default {
   rates: {
     heading: 'Cijene',
     sub: 'Koliko što košta',
+    perHour: '/ sat',
+    perSession: '/ termin',
+    save: 'ušteda',
+    quote: 'Cijena po projektu — javite se za ponudu.',
     note: LOREM.ratesNote,
+    packages: {
+      single: 'Pojedinačni termin',
+      five: 'Paket od 5 termina',
+      ten: 'Paket od 10 termina',
+    },
     items: {
-      tutoring: { name: 'Instrukcije', unit: 'za 60 minuta' },
-      lessons: { name: 'Sat jezika', unit: 'za 60 minuta' },
-      // Croatian groups thousands with a full stop, not a comma.
-      editing: { name: 'Lektura i korektura', unit: 'za 1.000 riječi' },
-      copywriting: { name: 'Pisanje tekstova', unit: 'ponuda po projektu' },
+      tutoring: { name: 'Školske instrukcije iz engleskog ili hrvatskog' },
+      lessons: { name: 'Satovi jezika' },
+      academic: { name: 'Akademski engleski i pisanje' },
+      editing: { name: 'Lektura i korektura' },
+      copywriting: { name: 'Pisanje tekstova' },
     },
   },
 
@@ -130,12 +139,11 @@ export default {
     heading: 'Česta pitanja',
     sub: 'Dobro je znati',
     items: [
-      { q: LOREM.faqQuestionOne, a: LOREM.faqAnswerOne },
-      { q: 'Održavate li nastavu online ili uživo?', a: LOREM.faqAnswerTwo },
-      { q: 'Koliko traje jedan sat?', a: LOREM.faqAnswerThree },
-      { q: 'Koju razinu znanja trebam za početak?', a: LOREM.faqAnswerFour },
-      { q: 'U kojem roku možete napraviti lekturu?', a: LOREM.faqAnswerFive },
-      { q: 'Što ako moram otkazati termin?', a: LOREM.faqAnswerSix },
+      { q: 'Održavate li nastavu online ili uživo?', a: LOREM.faqAnswerOne },
+      { q: 'Koliko traje jedan sat?', a: LOREM.faqAnswerTwo },
+      { q: 'Koju razinu znanja trebam za početak?', a: LOREM.faqAnswerThree },
+      { q: 'U kojem roku možete napraviti lekturu?', a: LOREM.faqAnswerFour },
+      { q: 'Što ako moram otkazati termin?', a: LOREM.faqAnswerFive },
     ],
   },
 

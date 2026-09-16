@@ -2,7 +2,8 @@ import Reveal from '../components/Reveal'
 import { useLang } from '../i18n'
 
 // PLACEHOLDER. Nothing in src/i18n/ under `testimonials.quotes` is a real
-// quote from a real student — replace them before the site is published, or
+// quote from a real student — the English ones were made up for the layout at
+// the site owner's request. Replace them before the site is published, or
 // delete this section from App.jsx (and re-pair the dividers around it) until
 // there are real ones.
 

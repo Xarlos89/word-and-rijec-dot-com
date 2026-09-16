@@ -2,8 +2,8 @@ import { useState } from 'react'
 import Reveal from '../components/Reveal'
 import { useLang } from '../i18n'
 
-// The questions are the ones a language service is usually asked and are
-// translated; the answers are all still lorem. Both live in src/i18n/.
+// Questions and answers both live in src/i18n/. The Croatian answers are
+// still lorem.
 
 function FAQItem({ q, a }) {
   const [open, setOpen] = useState(false)

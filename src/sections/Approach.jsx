@@ -2,7 +2,7 @@ import Reveal from '../components/Reveal'
 import { useLang } from '../i18n'
 
 // The step NUMERALS are presentation, not content, so they stay here; the
-// titles and bodies come from src/i18n/ and are both still lorem.
+// titles and bodies come from src/i18n/.
 const numerals = ['01', '02', '03']
 
 export default function Approach() {

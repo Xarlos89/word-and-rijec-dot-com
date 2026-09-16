@@ -3,7 +3,8 @@ import { useLang } from '../i18n'
 
 // The four services are real — they are what the business does. Only the
 // ICONS live here now; the titles, the audiences and the descriptions are in
-// src/i18n/, keyed by the same ids, so both languages stay in step.
+// src/i18n/, keyed by the same ids, so both languages stay in step. The cards
+// render in the dictionary's key order — language lessons first.
 const icons = {
   tutoring: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.3} className="w-5 h-5">
@@ -39,8 +40,7 @@ export default function Services() {
         <Reveal>
           <div className="max-w-2xl mb-14">
             <h2 className="section-heading mb-3">{t.services.heading}</h2>
-            <p className="section-sub mb-7">{t.services.sub}</p>
-            <p className="lede">{t.services.lede}</p>
+            <p className="section-sub">{t.services.sub}</p>
           </div>
         </Reveal>
 

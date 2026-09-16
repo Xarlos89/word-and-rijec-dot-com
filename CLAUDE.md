@@ -10,9 +10,9 @@ language lessons, editing, proofreading and copywriting in English and Croatian.
 The page is built **twice, once per language** — `/` in English and `/hr/` in Croatian — from one set of
 components and two dictionaries. See "Two languages" below before touching any user-visible string.
 
-It is currently a **template**: the structure, the design system and the deploy pipeline are real, and
-essentially all of the copy is lorem ipsum. Nothing on the page has been confirmed by the client. See
-"What's placeholder" at the bottom — read that section before writing any content.
+The **English page now carries the client's own copy** (hero, services, about, how it works, rates, FAQ,
+contact). The **Croatian page is still mostly lorem**, waiting for her own Croatian, and the testimonials
+are invented. See "What's placeholder" at the bottom — read that section before writing any content.
 
 The site is a sibling of `../guy-catz-dot-com` and `../veli-bol-home` and shares their stack and
 conventions; when something here is unclear, those are the reference implementations.
@@ -118,17 +118,17 @@ turn them back into parallel arrays; the first reorder would silently mis-pair t
 
 ### What is translated, and what is not
 
-Translated: section names, the four services and who they are for, rate units, the questions in the FAQ,
-and all UI chrome.
+Translated: section names, service and rate names, the short audience lists, the rate package labels,
+the questions in the FAQ, and all UI chrome.
 
 **Not translated, and not to be:**
 
 - **The wordmark.** "Word & Riječ" is the business name and reads the same on both pages.
-- **Every body paragraph.** They are lorem, and both dictionaries import the *same* strings from
-  `src/i18n/lorem.js`. This is the "Don't invent" rule at the bottom of this file, applied to a second
-  language where it bites harder: Croatian lorem is indistinguishable from real Croatian to a reader who
-  does not speak it. `grep -rn "LOREM\." src/i18n/` lists everything still outstanding; when `lorem.js` is
-  empty, the copy is done.
+- **Every sentence or paragraph of her copy.** The English is hers; the Croatian side reads `LOREM.x`
+  from `src/i18n/lorem.js` until she writes it. This is the "Don't invent" rule at the bottom of this file,
+  applied to a second language where it bites harder: a Croatian translation of her English is
+  indistinguishable from her own Croatian to a reader who does not speak it. `grep -rn "LOREM\." src/i18n/`
+  lists everything still outstanding; when `lorem.js` is empty, the copy is done.
 
 ### Adding a third language
 
@@ -184,15 +184,15 @@ button, not from a new background.
 ### The seams are immortelle flowers
 
 A `<Divider>` is not a wave any more. It draws a soft ground line with **immortelle sprigs growing up out
-of it** — and the ground *and* the flowers are painted in the colour of the section **below**, over a
-background of the section **above**. The next band does not begin at an edge; it grows into the one before
-it, and a few stems reach further up than the rest.
+of it**. The ground *and the stems* are painted in the colour of the section **below**, over a background
+of the section **above**, so the next band grows into the one before it. **The blooms are always
+immortelle yellow** (`dandelion`, via `palette.dandelion`) whichever bands meet — they no longer take the
+band colour, at the client's request.
 
 Two consequences:
 
-- **`from` and `to` must match their neighbours** or the flowers come out the wrong colour, which is far
-  more obvious than a mismatched wave was.
-- **The band colours have to stay apart in value.** The flowers are only visible because `mint` and `haze`
+- **`from` and `to` must match their neighbours** or the ground and stems come out the wrong colour.
+- **The band colours have to stay apart in value.** The stems are only visible because `mint` and `haze`
   differ; at 1.41:1 they are a gentle step, and that is close to the floor. This is why `haze` was darkened
   to `#A7B0AA` when `mint` went green — the requested mint against the old grey was 1.19:1, at which point
   the seam and every flower in it disappears. If you change either band, re-check this first.
@@ -298,25 +298,23 @@ display size under a display heading reads as a heading that failed to commit.
 
 ### The logo
 
-`src/components/Logo.jsx` is the brand mark: **a single immortelle flower in outline** — one slender stem,
-two needle leaves, and the flat-topped umbel of four buttons that grows along every section seam. Portrait,
-`64×80`, drawn in open line with round caps and no fills.
+`src/components/Logo.jsx` is the brand mark: **an immortelle growing inside a speech bubble** — language
+services and the flower from the brief in one shape. Square, `64×64`.
 
-**The mark carries no lettering.** An earlier round drew the word "word" as one unbroken cursive line ending
-in the umbel; it was replaced by the flower alone. The wordmark text sits next to the mark at all three call
-sites and already says the name, so the mark does not repeat it — which is also why it is `aria-hidden`
-unless given a `title`.
-
-- **Outline, not silhouette.** The buttons are hollow rings. That is the entire difference between `<Logo>`
-  and `<Sprig>`, and it is why the two are not interchangeable.
-- `src/components/Sprig.jsx` is the small-size form — same flower, **solid** buttons — for 16px slots, the
-  `<Photo>` empty state and the favicon. Below about 24px a ring closes up into a dot, so anything that
-  small takes `<Sprig>`. `public/favicon.svg` is the same solid drawing, for the same reason.
+- The bubble is a **solid** ground in `currentColor` (`text-pine` at every call site), so the mark keeps
+  its edge on `mint`, `haze` and `cloud` and still reads at 18px.
+- Inside it, the stems are `mint` and the heads `dandelion` (7.1:1 on pine) — fixed colours from
+  `src/palette.js`, not `currentColor`, because they only ever sit on the bubble.
+- The flower is a corymb like the real plant: three stems, clustered round heads, a pair of needle leaves.
+- **The mark carries no lettering.** The wordmark sits beside it at all three call sites, which is also why
+  it is `aria-hidden` unless given a `title`.
+- `public/favicon.svg` is the same drawing and must be kept in step with `Logo.jsx`.
+- `src/components/Sprig.jsx` is **not** the mark any more; it is the small line ornament beside labels and
+  in the `<Photo>` empty state.
 - Call sites set a height and let the width follow (`h-7 w-auto` in the navbar, `h-8` in the footer,
-  `h-14 sm:h-20` in the hero). The stroke is in user units, so its optical weight holds at every size.
-- If it is redrawn, **keep it one flower in open line**. That is the whole idea of the mark.
-- It is still a placeholder in the sense that matters: a real illustrator should draw this. What is here is
-  a faithful sketch of the concept, not a finished identity.
+  `h-14 sm:h-20` in the hero).
+- It replaced an earlier single flower in open line (hollow rings, portrait 64×80). A real illustrator
+  should still refine it.
 
 ### Croatian diacritics — the one non-obvious font constraint
 
@@ -351,9 +349,9 @@ usually a section that has drifted from the system.
   visible if JavaScript never runs**. Do not move that hidden state into the base stylesheet.
 - **`<Photo>`** renders an image, or a labelled placeholder when `src` is falsy. Every image slot goes
   through it, which is why the page looks finished with no photography at all. Pass `tone="dark"` on `sea`.
-- **`<Sprig>`** is the house mark — a stem with three blooms, the favicon drawn in JSX. It inherits
-  `currentColor` (`dandelion-deep` on the light bands, `dandelion` in the footer). It stands in for a logo, and should be replaced
-  wholesale if a real one arrives.
+- **`<Sprig>`** is a small line ornament — a stem with a few blooms — used beside labels and in the
+  `<Photo>` empty state. It inherits `currentColor` (`dandelion-deep` on the light bands). It is not the
+  logo; see "The logo".
 - **`<Divider>`** — see "Bands and seams".
 - **`<LangSwitch>`** is the language switcher: one compact link showing the language it switches *to*. It
   stays visible at every width, including below `md` where the nav links are hidden — it is the only way
@@ -518,7 +516,15 @@ English lorem is worse than not launching the Croatian page at all.
 Assume everything is, unless it is in this list of things that are real:
 
 - The business name, "Word & Riječ", the domain `word-and-rijec.com`, and the two languages.
-- The four services: tutoring, language lessons, editing & proofreading, copywriting.
+- The four services: language lessons, tutoring, editing & proofreading, copywriting — and the English
+  titles, audiences and descriptions of each, in that order.
+- **The English copy** — the hero ("More language. More life." and its two paragraphs, also used as the
+  English tagline), About (Rebekah Berković's own text), How it works, the FAQ answers, the rates note and
+  the contact paragraph. All supplied by the client.
+- **`site.practitioner`**: Rebekah Berković.
+- **Rates.** The figures in the `prices` map in `Rates.jsx` are hers: tutoring €15/h with 5- and 10-session
+  blocks, lessons €30/h with blocks and savings, academic English €40/h, proofreading €30/h, copy quoted
+  per project. The figures are shared by both languages; the names and package labels are translated.
 - The stack, the design system, the build and the deploy workflow.
 - The **bilingual machinery** — the two routes, the dictionaries, the switcher, the hreflang. The Croatian
   translations of the section names, the services, the rate units and the FAQ questions are real Croatian,
@@ -526,24 +532,21 @@ Assume everything is, unless it is in this list of things that are real:
 
 Placeholder, and to be replaced before anything is shown to the public:
 
-- **All body copy, in both languages.** Every paragraph on both pages is lorem ipsum, and both dictionaries
-  import the same strings from `src/i18n/lorem.js` rather than each carrying their own. `grep -rn "LOREM\."
-  src/i18n/` is the outstanding-work list; when `lorem.js` is empty, the copy is done.
-- **`src/siteInfo.js`** — `hello@example.com`, "Placeholder Name". No phone number and no social links; the
+- **The Croatian copy.** Every sentence or paragraph on `/hr/` is still lorem from `src/i18n/lorem.js`, and
+  the English footer blurb is too. `grep -rn "LOREM\." src/i18n/` is the outstanding-work list; when
+  `lorem.js` is empty, the copy is done.
+- **`src/siteInfo.js`** — `hello@example.com`. No phone number and no social links; the
   footer and the contact section hide those fields while they are empty, so leaving them blank is safe.
   `site.url` is now real.
-- **The tagline and "Online, worldwide"**, now in `site` in each dictionary rather than `siteInfo.js`.
-- **Rates.** Every figure in the `prices` map in `Rates.jsx` is `€00` and was invented to show the layout.
-  Nothing has been agreed. The figures are shared by both languages; only the names and units are
-  translated.
-- **Testimonials.** Not real quotes from real students. Delete the section from `App.jsx` (and re-pair the
+- **The Croatian tagline and "Online, worldwide"**, in `site` in each dictionary.
+- **Testimonials.** The three English quotes (Sarah M., Ivana K., Marko P.) were **made up for the layout
+  at the site owner's request** — they are not real students; the Croatian side is lorem. Replace them with
+  real quotes, or delete the section from `App.jsx` (and re-pair the
   dividers around it) rather than launching with invented ones — and delete `testimonials` from *both*
   dictionaries, or the same-shape assertion will pass while the section is gone and quietly rot.
-- **FAQ answers.** The questions are the ones a language service is usually asked, in both languages; the
-  answers are lorem in both.
+- **FAQ answers in Croatian.** The English answers are hers; the Croatian ones are lorem.
 - **Photography.** None. Every `<Photo>` renders its placeholder state.
-- **Logo.** `<Logo>`, `<Sprig>` and `public/favicon.svg` are drawn here, not commissioned. See "The
-  logo" above — the concept is right, the execution should go to an illustrator.
+- **Logo.** `<Logo>` and `public/favicon.svg` are drawn here, not commissioned. See "The logo" above.
 
 Two known gaps in the build itself, neither a bug to be surprised by:
 

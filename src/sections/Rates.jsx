@@ -1,17 +1,60 @@
 import Reveal from '../components/Reveal'
 import { useLang } from '../i18n'
 
-// PLACEHOLDER PRICES. Every figure below is invented to show the layout —
-// none of it has been agreed. See CLAUDE.md → "What's placeholder".
+// The client's own prices.
 //
-// Only the FIGURES are here. The names and the units are in src/i18n/, keyed
-// by the same ids, because a price is the same number in both languages and
-// "per 1,000 words" is not the same string.
+// Only the FIGURES are here. The names, the package labels and "/ hour" are in
+// src/i18n/, keyed by the same ids, because a price is the same number in both
+// languages and the words around it are not.
+//
+// `hourly: null` means the service is quoted per project. A package's `per`
+// and `saving` are optional — tutoring blocks carry neither.
 const prices = {
-  tutoring: '€00',
-  lessons: '€00',
-  editing: '€00',
-  copywriting: '—',
+  tutoring: {
+    hourly: '€15',
+    packages: [
+      { id: 'single', price: '€15' },
+      { id: 'five', price: '€70' },
+      { id: 'ten', price: '€135' },
+    ],
+  },
+  lessons: {
+    hourly: '€30',
+    packages: [
+      { id: 'single', price: '€30' },
+      { id: 'five', price: '€140', per: '€28', saving: '€10' },
+      { id: 'ten', price: '€270', per: '€27', saving: '€30' },
+    ],
+  },
+  academic: { hourly: '€40' },
+  editing: { hourly: '€30' },
+  copywriting: { hourly: null },
+}
+
+function Packages({ packages, t }) {
+  return (
+    <ul className="mt-3 space-y-1.5">
+      {packages.map(({ id, price, per, saving }) => (
+        <li key={id} className="flex flex-wrap items-baseline justify-between gap-x-4 font-sans text-[14px] text-ink-soft">
+          <span>{t.rates.packages[id]}</span>
+          <span className="text-right">
+            <span className="font-bold text-ink">{price}</span>
+            {per && (
+              <span className="text-ink-soft/80">
+                {' '}
+                ({per} {t.rates.perSession})
+              </span>
+            )}
+            {saving && (
+              <span className="ml-2 inline-block rounded-full bg-dandelion/60 px-2 py-0.5 text-[12px] font-bold text-ink">
+                {t.rates.save} {saving}
+              </span>
+            )}
+          </span>
+        </li>
+      ))}
+    </ul>
+  )
 }
 
 export default function Rates() {
@@ -29,20 +72,28 @@ export default function Rates() {
           <Reveal delay={110}>
             <div className="soft-card sm:p-10">
               <ul>
-                {Object.entries(t.rates.items).map(([id, { name, unit }]) => (
-                  <li
-                    key={id}
-                    className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-5 border-b border-line last:border-0"
-                  >
-                    <div>
-                      <p className="font-display text-xl text-ink">{name}</p>
-                      <p className="font-sans text-[13px] text-ink-soft/80">{unit}</p>
-                    </div>
-                    <p className="font-display text-2xl text-dandelion-deep">{prices[id]}</p>
-                  </li>
-                ))}
+                {Object.entries(t.rates.items).map(([id, { name }]) => {
+                  const { hourly, packages } = prices[id]
+                  return (
+                    <li key={id} className="py-5 border-b border-line last:border-0 first:pt-0">
+                      <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+                        <p className="font-display text-xl text-ink">{name}</p>
+                        {hourly && (
+                          <p className="font-display text-2xl text-dandelion-deep whitespace-nowrap">
+                            {hourly}{' '}
+                            <span className="font-sans text-[13px] text-ink-soft/80">{t.rates.perHour}</span>
+                          </p>
+                        )}
+                      </div>
+                      {!hourly && <p className="font-sans text-[14px] text-ink-soft mt-1">{t.rates.quote}</p>}
+                      {packages && <Packages packages={packages} t={t} />}
+                    </li>
+                  )
+                })}
               </ul>
-              <p className="font-sans text-[13px] text-ink-soft/80 leading-[1.8] mt-6">{t.rates.note}</p>
+              <p className="font-sans text-[14px] text-ink-soft leading-[1.8] mt-1 pt-6 border-t border-line">
+                {t.rates.note}
+              </p>
             </div>
           </Reveal>
         </div>

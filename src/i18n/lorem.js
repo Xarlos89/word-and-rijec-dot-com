@@ -1,41 +1,41 @@
 /**
  * EVERY PLACEHOLDER PARAGRAPH ON THE SITE, IN ONE FILE.
  *
- * The client has not supplied copy. Rather than let lorem hide inside the
- * dictionaries — where a Croatian reader would eventually find English
- * filler, or worse, invented Croatian marketing copy — both en.js and hr.js
- * import the SAME strings from here.
+ * The English page now carries the client's own copy almost everywhere; what
+ * is left here is mostly the CROATIAN side, which waits for her to write it
+ * herself rather than for anyone to translate her English. See CLAUDE.md →
+ * "Don't invent".
  *
- * That makes the remaining work mechanical: when real copy arrives, replace a
- * `LOREM.x` reference in en.js with the English text and the one in hr.js with
- * the Croatian, and delete the entry here once nothing references it. When
+ * When real copy arrives, replace a `LOREM.x` reference in the dictionary
+ * with the text and delete the entry here once nothing references it. When
  * this file is empty, the site is ready for the launch switch in
  * CLAUDE.md → SEO.
  *
  * `grep -rn "LOREM\." src/i18n/` lists what is still outstanding.
  */
 export const LOREM = {
+  // Croatian only — the English tagline is her hero line.
   tagline: 'Lorem ipsum dolor sit amet',
 
-  heroLede: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
+  heroLede: 'Lorem ipsum dolor sit amet',
   heroBody:
-    'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
+  heroBodyTwo:
+    'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur, excepteur sint occaecat cupidatat non proident.',
 
-  servicesLede:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.',
-  serviceTutoring:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  serviceLessons:
-    'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-  serviceEditing:
-    'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-  serviceCopywriting:
-    'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+  lessonsAudience: 'Lorem ipsum dolor sit amet',
+  serviceTutoring: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+  serviceLessons: 'Ut enim ad minim veniam.',
+  serviceEditing: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.',
+  serviceCopywriting: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia.',
 
-  aboutOne:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-  aboutTwo:
+  aboutBody: [
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.',
     'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt.',
+    'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.',
+    'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.',
+    'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.',
+  ],
 
   stepOneTitle: 'Lorem ipsum',
   stepOneBody: 'Dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
@@ -51,27 +51,25 @@ export const LOREM = {
   quoteThree:
     'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
   quoteDetail: 'Lorem ipsum',
+  studentName: 'Lorem I.',
 
   ratesNote:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
 
-  faqQuestionOne: 'Lorem ipsum dolor sit amet?',
   faqAnswerOne:
-    'Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.',
-  faqAnswerTwo:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  faqAnswerThree:
+  faqAnswerTwo:
     'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-  faqAnswerFour:
+  faqAnswerThree:
     'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-  faqAnswerFive:
+  faqAnswerFour:
     'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.',
-  faqAnswerSix:
+  faqAnswerFive:
     'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.',
 
   contactBody:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-  footerBlurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
 
-  studentName: 'Student name',
+  // Both languages — she has not sent a footer blurb.
+  footerBlurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
 }
