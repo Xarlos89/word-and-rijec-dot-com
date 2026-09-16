@@ -4,12 +4,12 @@ import { palette } from '../palette'
  * The seam between two colour bands: a soft ground line with immortelle
  * sprigs growing up out of it.
  *
- * Everything in here — the ground AND the flowers — is painted in the colour
- * of the section BELOW, over a background of the section above. So the next
- * band does not begin at a hard edge; it grows into the one before it, and a
- * few stems reach further up than the rest. That is the whole trick, and it
- * is why the two band colours have to stay far enough apart in value: if
- * `mint` and `haze` converge, these flowers vanish with the seam.
+ * The ground and the STEMS are painted in the colour of the section BELOW,
+ * over a background of the section above, so the next band does not begin at
+ * a hard edge; it grows into the one before it. The BLOOMS are always
+ * immortelle yellow (`dandelion`), whichever two bands meet — they are the
+ * flower, not the ground. The stems still need `mint` and `haze` to stay
+ * apart in value, or they vanish with the seam.
  *
  * `from` is the colour of the section above, `to` the section below.
  * Reordering sections means re-pairing those.
@@ -89,15 +89,15 @@ export default function Divider({ from, to, shape = 'meadow', className = '' }) 
         {/* preserveAspectRatio="none" stretches the viewBox, so the stems are
             drawn with vector-effect="non-scaling-stroke" to keep an even
             weight instead of smearing wide on a desktop viewport. */}
-        <g fill={toColor} stroke={toColor} strokeWidth={1.7} strokeLinecap="round" vectorEffect="non-scaling-stroke">
+        <g fill="none" stroke={toColor} strokeWidth={1.7} strokeLinecap="round">
           {seam.sprigs.map((sprig, i) => (
-            <g key={i}>
-              <path d={sprig.stem} fill="none" vectorEffect="non-scaling-stroke" />
-              {sprig.buds.map(([cx, cy, r], j) => (
-                <circle key={j} cx={cx} cy={cy} r={r} stroke="none" />
-              ))}
-            </g>
+            <path key={i} d={sprig.stem} vectorEffect="non-scaling-stroke" />
           ))}
+        </g>
+        <g fill={palette.dandelion}>
+          {seam.sprigs.flatMap((sprig, i) =>
+            sprig.buds.map(([cx, cy, r], j) => <circle key={`${i}-${j}`} cx={cx} cy={cy} r={r} />)
+          )}
         </g>
       </svg>
     </div>

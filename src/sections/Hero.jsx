@@ -14,8 +14,8 @@ import Logo from '../components/Logo'
  * colour and one style — no italic, no second colour on "Riječ"; the size of
  * it is what makes it the loudest thing on the page.
  *
- * The three items under the buttons are the real service names, from the
- * dictionary; everything else in this section is still lorem.
+ * Everything here comes from the dictionary; the body is an array of
+ * paragraphs.
  *
  * Laid out mobile-first: one left edge that every element lines up on, a
  * headline that wraps on its own below `sm`, and full-width stacked buttons
@@ -39,9 +39,9 @@ export default function Hero() {
           {/* The site name is the `h1` for the same reason it is the largest
               thing on the page: it names what this page is about. The line
               under it is a `p`. */}
-          {/* The mark, then the name. The mark is the immortelle in outline
-              and carries no words, so it carries no alt text either — the h1
-              directly under it is what names the business. */}
+          {/* The mark, then the name. The mark carries no words, so it
+              carries no alt text either — the h1 directly under it is what
+              names the business. */}
           <Logo className="h-14 sm:h-20 w-auto text-pine mb-6 sm:mb-8" />
 
           <h1
@@ -58,9 +58,13 @@ export default function Hero() {
             {t.hero.lede}
           </p>
 
-          <p className="font-sans text-[17px] sm:text-xl text-ink-soft leading-[1.75] max-w-xl mb-9 sm:mb-10">
-            {t.hero.body}
-          </p>
+          <div className="max-w-xl mb-9 sm:mb-10 space-y-4">
+            {t.hero.body.map((para) => (
+              <p key={para} className="font-sans text-[17px] sm:text-lg text-ink-soft leading-[1.75]">
+                {para}
+              </p>
+            ))}
+          </div>
 
           {/* Stacked and full-width on a phone, side by side from sm up */}
           <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 sm:gap-4 mb-11 sm:mb-14">

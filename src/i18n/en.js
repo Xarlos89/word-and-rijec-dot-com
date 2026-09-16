@@ -6,9 +6,8 @@ import { LOREM } from './lorem'
  * module load, so `npm run build` fails on drift rather than prerendering a
  * page with a hole in it.
  *
- * Anything reading `LOREM.x` is still waiting on the client's copy. Real
- * strings — the four services, the two languages, the section names, the
- * questions a language service actually gets asked — are written out.
+ * The copy here is the client's own, except for the testimonials (see the
+ * note on them) and anything still reading `LOREM.x`.
  */
 export default {
   meta: {
@@ -25,7 +24,7 @@ export default {
   site: {
     what: 'English and Croatian language services',
     location: 'Online, worldwide',
-    tagline: LOREM.tagline,
+    tagline: 'More language. More life.',
   },
 
   switcher: {
@@ -44,16 +43,19 @@ export default {
     faq: 'FAQ',
     contact: 'Get in touch',
     submenu: {
-      tutoring: 'Tutoring',
       lessons: 'Lessons',
+      tutoring: 'Tutoring',
       editing: 'Editing & proofreading',
       copywriting: 'Copywriting',
     },
   },
 
   hero: {
-    lede: LOREM.heroLede,
-    body: LOREM.heroBody,
+    lede: 'More language. More life.',
+    body: [
+      'Sometimes you know exactly what you want to say — you just don’t have the words yet. Or you have the words, but not quite the confidence to use them.',
+      'Learning a language can turn that frustration into freedom: more confidence, more ease, and more ways to connect, express yourself and build new worlds.',
+    ],
     ctaPrimary: 'Get in touch',
     ctaSecondary: 'See what I offer',
     offer: ['Tutoring & lessons', 'Editing & proofreading', 'Copywriting'],
@@ -62,67 +64,111 @@ export default {
   services: {
     heading: 'Services',
     sub: 'What I can help with',
-    lede: LOREM.servicesLede,
+    // Rendered in this order — language lessons first.
     items: {
+      lessons: {
+        title: 'Language lessons',
+        audience: 'English and Croatian for real life, at your pace',
+        body: 'Individual or small groups.',
+      },
       tutoring: {
         title: 'Tutoring',
         audience: 'School and university students',
-        body: LOREM.serviceTutoring,
-      },
-      lessons: {
-        title: 'Language lessons',
-        audience: 'English and Croatian, any level',
-        body: LOREM.serviceLessons,
+        body: 'Help with schoolwork, exam preparation and essay writing.',
       },
       editing: {
         title: 'Editing & proofreading',
-        audience: 'Theses, articles, manuscripts',
-        body: LOREM.serviceEditing,
+        audience: 'Theses, articles, brochures',
+        body: 'Catching those sneaky mistakes and typos. Making your writing clearer, without taking away your voice.',
       },
       copywriting: {
         title: 'Copywriting',
-        audience: 'Websites, brochures, campaigns',
-        body: LOREM.serviceCopywriting,
+        audience: 'Websites, campaigns, brochures',
+        body: 'Finding the words when you know what you want to say, but don’t quite know how to say it.',
       },
     },
   },
 
   about: {
-    heading: 'About',
-    photoAlt: 'Portrait of the tutor',
-    bodyOne: LOREM.aboutOne,
-    bodyTwo: LOREM.aboutTwo,
+    heading: 'About me',
+    photoAlt: 'Portrait of Rebekah Berković',
+    body: [
+      'I grew up in Croatia speaking English at home with my British mother and Croatian with my father. Being bilingual has always felt natural to me, but it also made me aware from an early age of what language can do — how it can open doors to reading, writing, creativity, connection and new experiences.',
+      'For more than 15 years, I’ve taught English and Croatian to all kinds of learners, from complete beginners to advanced speakers. I’ve taught simple one-on-one conversational classes, school and university students, corporate groups and even members of parliament.',
+      'I’ve also been on the other side of the language barrier. I learnt German and Thai from scratch while living in Austria and Thailand, so I know how frustrating it can be to have so much you want to say but not have the words. I also know the wonderful feeling when something finally clicks — when you can have a conversation, understand a joke, read a sign or write something yourself, and suddenly a place feels a little more like home.',
+      'I believe language learning works best when you actually use the language, in a relaxed environment where you can make mistakes, ask questions and figure things out without feeling judged.',
+      'And language isn’t only about speaking. I love working with words on the page, too. Whether it’s a website, essay, application, menu or something more personal, I’m here to help you make sure your words say what you want them to say — and say it well.',
+    ],
   },
 
   approach: {
     heading: 'How it works',
     sub: 'From first message to first lesson',
     steps: [
-      { title: LOREM.stepOneTitle, body: LOREM.stepOneBody },
-      { title: LOREM.stepTwoTitle, body: LOREM.stepTwoBody },
-      { title: LOREM.stepThreeTitle, body: LOREM.stepThreeBody },
+      {
+        title: 'Get in touch',
+        body: 'Send me a message and tell me a little about what you’re looking for, what you need help with, and what you’d like to achieve.',
+      },
+      {
+        title: 'Let’s meet',
+        body: 'We’ll set up a quick call or meeting to talk things through. We’ll work out what kind of support would suit you, how often we’ll work together, and what that will cost. The first meeting is free.',
+      },
+      {
+        title: 'Get started',
+        body: 'Once we’ve agreed on a plan, we get to work. Everything is tailored to you — your needs, your goals and your way of working.',
+      },
     ],
   },
 
+  // PLACEHOLDER. These three were written for the layout at the site owner's
+  // request; they are not from real students. Replace them with real quotes
+  // before launch. See CLAUDE.md → "What's placeholder".
   testimonials: {
     heading: 'Testimonials',
     sub: 'In their own words',
     quotes: [
-      { quote: LOREM.quoteOne, name: LOREM.studentName, detail: LOREM.quoteDetail },
-      { quote: LOREM.quoteTwo, name: LOREM.studentName, detail: LOREM.quoteDetail },
-      { quote: LOREM.quoteThree, name: LOREM.studentName, detail: LOREM.quoteDetail },
+      {
+        quote:
+          'I moved to Split knowing about four words of Croatian. A few months later I can chat with my neighbours and order at the market without panicking. Lessons never felt like homework — just conversations that kept getting easier.',
+        name: 'Sarah M.',
+        detail: 'Croatian lessons',
+      },
+      {
+        quote:
+          'My daughter was dreading her English exams. After a term of weekly sessions she went in calm, knew exactly how to structure her essay, and came out with a grade she was proud of.',
+        name: 'Ivana K.',
+        detail: 'Parent, school tutoring',
+      },
+      {
+        quote:
+          'Rebekah proofread my master’s thesis and caught things I had read past a hundred times. The writing came back clearer, and it still sounded like me.',
+        name: 'Marko P.',
+        detail: 'Thesis proofreading',
+      },
     ],
   },
 
   rates: {
     heading: 'Rates',
     sub: 'What things cost',
-    note: LOREM.ratesNote,
+    perHour: '/ hour',
+    perSession: '/ session',
+    save: 'save',
+    quote: 'Project-based — get in touch for a quote.',
+    note: 'Your first call or meeting is free. It’s simply a chance to talk, see if we click, and figure out what you need.',
+    packages: {
+      single: 'Single session',
+      five: '5-session block',
+      ten: '10-session block',
+    },
+    // Rendered in this order. The figures are in src/sections/Rates.jsx,
+    // keyed by the same ids.
     items: {
-      tutoring: { name: 'Tutoring', unit: 'per 60 minutes' },
-      lessons: { name: 'Language lesson', unit: 'per 60 minutes' },
-      editing: { name: 'Editing & proofreading', unit: 'per 1,000 words' },
-      copywriting: { name: 'Copywriting', unit: 'quoted per project' },
+      tutoring: { name: 'School English or Croatian tutoring' },
+      lessons: { name: 'Language lessons' },
+      academic: { name: 'Academic English & writing' },
+      editing: { name: 'Proofreading & editing' },
+      copywriting: { name: 'Writing & copy' },
     },
   },
 
@@ -130,18 +176,32 @@ export default {
     heading: 'FAQ',
     sub: 'Good to know',
     items: [
-      { q: LOREM.faqQuestionOne, a: LOREM.faqAnswerOne },
-      { q: 'Do you teach online or in person?', a: LOREM.faqAnswerTwo },
-      { q: 'How long is a lesson?', a: LOREM.faqAnswerThree },
-      { q: 'What level do I need to start?', a: LOREM.faqAnswerFour },
-      { q: 'How quickly can you turn around editing work?', a: LOREM.faqAnswerFive },
-      { q: 'What happens if I need to cancel?', a: LOREM.faqAnswerSix },
+      {
+        q: 'Do you teach online or in person?',
+        a: 'Both or either! If there is a suitable location for both of us, we can meet in person. If not, we can meet online. We can also mix and match as we go.',
+      },
+      {
+        q: 'How long is a lesson?',
+        a: 'A good rule of thumb is 60 minutes. It gives us time to settle in, look at what needs to be done and get into it. 45-minute lessons are also possible, especially for school tutoring.',
+      },
+      {
+        q: 'What level do I need to start?',
+        a: 'You don’t. I have taught students who didn’t know more than ‘Hello’ and weren’t sure how to read or pronounce short words. I have also taught students who are advanced and wanted more technical ability. Everyone starts somewhere.',
+      },
+      {
+        q: 'How quickly can you turn around editing work?',
+        a: 'It depends on the length and complexity of the project, but I’ll always give you a clear timeframe before we start. If you’re working to a deadline, let me know and I’ll do my best to accommodate it.',
+      },
+      {
+        q: 'What happens if I need to cancel?',
+        a: 'Things come up! Just let me know as soon as you can. Cancellations with at least 24 hours’ notice are free of charge. If you cancel with less notice or don’t show up, the session may still be charged.',
+      },
     ],
   },
 
   contact: {
     heading: 'Get in touch',
-    body: LOREM.contactBody,
+    body: 'Not sure exactly what you need? Just send me a message and tell me what you’re looking for. We can figure out the rest together.',
   },
 
   footer: {

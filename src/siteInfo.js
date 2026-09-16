@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────
-// PLACEHOLDER CONTACT DETAILS. Everything below the name is a
+// PLACEHOLDER CONTACT DETAILS. Everything below the practitioner is a
 // stand-in and must be replaced before the site goes anywhere
 // public — see CLAUDE.md → "What's placeholder".
 //
@@ -19,7 +19,7 @@ export const site = {
   // styled differently from the other — one colour, one weight, no italic.
   nameFirst: 'Word',
   nameSecond: 'Riječ',
-  practitioner: 'Placeholder Name',            // placeholder
+  practitioner: 'Rebekah Berković',
   credentials: '',                             // e.g. 'MA, CELTA' — unknown
 
   // All placeholder.

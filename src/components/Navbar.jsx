@@ -13,8 +13,8 @@ function navLinksFor(t) {
       label: t.nav.services,
       href: '#services',
       children: [
-        { label: t.nav.submenu.tutoring, href: '#services' },
         { label: t.nav.submenu.lessons, href: '#services' },
+        { label: t.nav.submenu.tutoring, href: '#services' },
         { label: t.nav.submenu.editing, href: '#services' },
         { label: t.nav.submenu.copywriting, href: '#services' },
       ],

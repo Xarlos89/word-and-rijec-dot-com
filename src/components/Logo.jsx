@@ -1,32 +1,29 @@
+import { palette } from '../palette'
+
 /**
- * The brand mark: a single immortelle flower, drawn in outline — one slender
- * stem, a pair of leaves, and the flat-topped umbel of four buttons that
- * grows along every section seam and sits in the favicon. Same parts as
- * <Sprig> and public/favicon.svg, so the three read as one drawing.
+ * The brand mark: an immortelle growing inside a speech bubble. Language
+ * services, and the flower from the brief, in one shape.
  *
- * It is OUTLINE, not silhouette: the buttons are hollow rings, which is the
- * whole difference between this and <Sprig>. Sprig fills them because at 16px
- * a ring closes up into a dot; the Logo is never used below about 24px, so it
- * can afford the lighter, more drawn line.
+ * - The bubble is a solid ground in currentColor (`text-pine` at every call
+ *   site), so the mark holds its edge on `mint`, `haze` and `cloud` alike and
+ *   still reads at 18px.
+ * - Inside it, the stems are `mint` and the blooms are `dandelion` — the same
+ *   yellow as the blooms in every section seam. Both are fixed colours, not
+ *   currentColor: they sit on the bubble, never on the page, so they do not
+ *   change with the band. dandelion on pine is 7.1:1.
+ * - The flower is a corymb, like the real plant: three stems, each ending in
+ *   a small cluster of round heads, with a pair of needle leaves low down.
  *
- * Portrait, 64×80 — it is a flower, so it stands taller than it is wide. Call
- * sites set a height and let the width follow (`h-7 w-auto`).
+ * Square, 64×64. Call sites set a height and let the width follow
+ * (`h-7 w-auto`). public/favicon.svg is the same drawing.
  *
- * Inherits currentColor, so the band it sits on decides its colour. The
- * stroke is set in user units and scales with the box, so it keeps the same
- * optical weight at 28px as at 80px.
- *
- * If this is ever redrawn — or replaced by a real illustrator's version, which
- * it should be — keep it one flower in open line. The mark is the bloom, not
- * the lettering: the wordmark beside it already says the name.
+ * <Sprig> is still the small line ornament beside labels; it is not this
+ * mark and the two are not interchangeable.
  */
 export default function Logo({ className = '', title }) {
   return (
     <svg
-      viewBox="0 0 64 80"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={4}
+      viewBox="0 0 64 64"
       strokeLinecap="round"
       strokeLinejoin="round"
       role={title ? 'img' : undefined}
@@ -34,24 +31,31 @@ export default function Logo({ className = '', title }) {
       aria-hidden={title ? undefined : true}
       className={className}
     >
-      {/* Stem, from the base up to where the umbel breaks */}
-      <path d="M32 76c0-14-1-28 0-42" />
+      {/* The bubble, tail at the lower left */}
+      <path
+        fill="currentColor"
+        d="M17 3h30A14 14 0 0 1 61 17v19A14 14 0 0 1 47 50H31l-12.5 10.5c-1.3 1.1-3 .2-3-1.4V50A14 14 0 0 1 3 36V17A14 14 0 0 1 17 3z"
+      />
 
-      {/* The leaf pair — the same shallow drooping arc <Sprig> and the
-          favicon carry, so all three read as one drawing */}
-      <path d="M40 47c-5 2.5-11 2.5-16 0" />
+      {/* Three stems from one base, and the leaf pair */}
+      <g fill="none" stroke={palette.mint} strokeWidth={2.6}>
+        <path d="M32 43V26" />
+        <path d="M32 37c-3-5-7-8-13-9.5" />
+        <path d="M32 35c3-5 7-8 13-9.5" />
+        <path d="M32 41c-3-.5-5-2.2-6-4.6" />
+        <path d="M32 40c3-.5 5-2.2 6-4.6" />
+      </g>
 
-      {/* Pedicels fanning out to each button, meeting it at its edge */}
-      <path d="M32 35c-3-7-9-10-14.7-12.5" />
-      <path d="M32 35c-2-6-4-11-5-16.3" />
-      <path d="M32 35c2-6 4-11 5-16.3" />
-      <path d="M32 35c3-7 9-10 14.7-12.5" />
-
-      {/* The umbel: four hollow buttons on one flat top */}
-      <circle cx="12" cy="18" r="7" />
-      <circle cx="25" cy="12" r="7" />
-      <circle cx="39" cy="12" r="7" />
-      <circle cx="52" cy="18" r="7" />
+      {/* The heads: a cluster of three on the centre stem, two on each side */}
+      <g fill={palette.dandelion}>
+        <circle cx="28.3" cy="21.5" r="4" />
+        <circle cx="35.7" cy="21.5" r="4" />
+        <circle cx="32" cy="15.5" r="4.3" />
+        <circle cx="13.5" cy="25.5" r="3.6" />
+        <circle cx="19.5" cy="21.8" r="3.6" />
+        <circle cx="44.5" cy="21.8" r="3.6" />
+        <circle cx="50.5" cy="25.5" r="3.6" />
+      </g>
     </svg>
   )
 }
