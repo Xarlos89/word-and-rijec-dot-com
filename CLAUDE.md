@@ -522,6 +522,7 @@ Assume everything is, unless it is in this list of things that are real:
   English tagline), About (Rebekah Berković's own text), How it works, the FAQ answers, the rates note and
   the contact paragraph. All supplied by the client.
 - **`site.practitioner`**: Rebekah Berković.
+- **The About portrait** of Rebekah, supplied by the client.
 - **Rates.** The figures in the `prices` map in `Rates.jsx` are hers: tutoring €15/h with 5- and 10-session
   blocks, lessons €30/h with blocks and savings, academic English €40/h, proofreading €30/h, copy quoted
   per project. The figures are shared by both languages; the names and package labels are translated.
@@ -545,7 +546,8 @@ Placeholder, and to be replaced before anything is shown to the public:
   dividers around it) rather than launching with invented ones — and delete `testimonials` from *both*
   dictionaries, or the same-shape assertion will pass while the section is gone and quietly rot.
 - **FAQ answers in Croatian.** The English answers are hers; the Croatian ones are lorem.
-- **Photography.** None. Every `<Photo>` renders its placeholder state.
+- **Photography.** Only the About portrait is real (`public/images/rebekah-berkovic-{400,600,830}.webp`,
+  cropped to 4:5 from an 830px-wide original, so there is no 1100 size). Nothing else has a photo.
 - **Logo.** `<Logo>` and `public/favicon.svg` are drawn here, not commissioned. See "The logo" above.
 
 Two known gaps in the build itself, neither a bug to be surprised by:
