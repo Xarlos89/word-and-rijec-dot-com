@@ -69,7 +69,4 @@ export const LOREM = {
 
   contactBody:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-
-  // Both languages — she has not sent a footer blurb.
-  footerBlurb: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
 }

@@ -150,11 +150,18 @@ export default {
   contact: {
     heading: 'Javite mi se',
     body: LOREM.contactBody,
+    form: {
+      name: 'Ime',
+      email: 'E-pošta',
+      message: 'Poruka',
+      send: 'Pošalji poruku',
+      subject: 'Novi upit s word-and-rijec.com',
+    },
+    orEmail: 'Ili mi pišite izravno',
   },
 
   footer: {
     exploreLabel: 'Istražite',
     contactLabel: 'Kontakt',
-    blurb: LOREM.footerBlurb,
   },
 }

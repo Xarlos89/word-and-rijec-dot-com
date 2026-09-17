@@ -202,11 +202,18 @@ export default {
   contact: {
     heading: 'Get in touch',
     body: 'Not sure exactly what you need? Just send me a message and tell me what you’re looking for. We can figure out the rest together.',
+    form: {
+      name: 'Name',
+      email: 'Email',
+      message: 'Message',
+      send: 'Send message',
+      subject: 'New enquiry from word-and-rijec.com',
+    },
+    orEmail: 'Or email me directly',
   },
 
   footer: {
     exploreLabel: 'Explore',
     contactLabel: 'Get in touch',
-    blurb: LOREM.footerBlurb,
   },
 }

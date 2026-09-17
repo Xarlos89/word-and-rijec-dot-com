@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
-// PLACEHOLDER CONTACT DETAILS. Everything below the practitioner is a
-// stand-in and must be replaced before the site goes anywhere
-// public — see CLAUDE.md → "What's placeholder".
+// CONTACT DETAILS. The name, practitioner, email and URL are real;
+// the rest (credentials, phone, socials) is still unknown and is
+// left empty — see CLAUDE.md → "What's placeholder".
 //
 // Every component reads from here, so one edit updates the whole
 // page.
@@ -22,9 +22,11 @@ export const site = {
   practitioner: 'Rebekah Berković',
   credentials: '',                             // e.g. 'MA, CELTA' — unknown
 
-  // All placeholder.
-  email: 'hello@example.com',
-  emailHref: 'mailto:hello@example.com',
+  // Her real address. The contact form posts to FormSubmit with this address
+  // too — see src/sections/Contact.jsx.
+  email: 'rebekahberkovic@gmail.com',
+  emailHref: 'mailto:rebekahberkovic@gmail.com',
+  // Placeholder — unknown.
   phone: '',
   phoneHref: '',
 

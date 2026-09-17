@@ -31,7 +31,7 @@ export default function Footer() {
           </div>
           <p className="font-sans font-light text-[15px] text-ink-soft mb-4">{t.site.tagline}</p>
           <p className="text-[14px] leading-[1.8] text-ink-soft max-w-xs">
-            {t.site.what}. {t.footer.blurb}
+            {t.site.what}.
           </p>
         </div>
 

@@ -51,7 +51,7 @@ pip install fonttools brotli && python3 scripts/trim-fonts.py   # narrow the fon
   to walk; nothing navigates through it at runtime. Every in-page link is a fragment and the language
   switcher is a plain `<a>` that loads the other document. Do not add client-side navigation on top of it
   without re-reading "Two languages".
-- No forms, no backend, no analytics.
+- No backend and no analytics. The one form (Contact) posts natively to FormSubmit — see "The contact form".
 
 ## Project layout
 
@@ -185,9 +185,10 @@ button, not from a new background.
 
 A `<Divider>` is not a wave any more. It draws a soft ground line with **immortelle sprigs growing up out
 of it**. The ground *and the stems* are painted in the colour of the section **below**, over a background
-of the section **above**, so the next band grows into the one before it. **The blooms are always
-immortelle yellow** (`dandelion`, via `palette.dandelion`) whichever bands meet — they no longer take the
-band colour, at the client's request.
+of the section **above**, so the next band grows into the one before it. **The blooms depend on
+the background**, at the client's request: over `haze` (`from="haze"`) they are immortelle yellow
+(`dandelion`, via `palette.dandelion`); over `mint` they take the stem colour, because yellow on green was
+too faint to read.
 
 Two consequences:
 
@@ -312,7 +313,7 @@ services and the flower from the brief in one shape. Square, `64×64`.
 - `src/components/Sprig.jsx` is **not** the mark any more; it is the small line ornament beside labels and
   in the `<Photo>` empty state.
 - Call sites set a height and let the width follow (`h-7 w-auto` in the navbar, `h-8` in the footer,
-  `h-14 sm:h-20` in the hero).
+  `h-10 sm:h-14 lg:h-16` in the hero, where it sits to the left of the `h1`).
 - It replaced an earlier single flower in open line (hollow rings, portrait 64×80). A real illustrator
   should still refine it.
 
@@ -533,10 +534,10 @@ Assume everything is, unless it is in this list of things that are real:
 
 Placeholder, and to be replaced before anything is shown to the public:
 
-- **The Croatian copy.** Every sentence or paragraph on `/hr/` is still lorem from `src/i18n/lorem.js`, and
-  the English footer blurb is too. `grep -rn "LOREM\." src/i18n/` is the outstanding-work list; when
+- **The Croatian copy.** Every sentence or paragraph on `/hr/` is still lorem from `src/i18n/lorem.js`.
+  (The footer blurb was removed rather than filled.) `grep -rn "LOREM\." src/i18n/` is the outstanding-work list; when
   `lorem.js` is empty, the copy is done.
-- **`src/siteInfo.js`** — `hello@example.com`. No phone number and no social links; the
+- **`src/siteInfo.js`** — the email (`rebekahberkovic@gmail.com`) is real. No phone number and no social links; the
   footer and the contact section hide those fields while they are empty, so leaving them blank is safe.
   `site.url` is now real.
 - **The Croatian tagline and "Online, worldwide"**, in `site` in each dictionary.
@@ -550,7 +551,7 @@ Placeholder, and to be replaced before anything is shown to the public:
   cropped to 4:5 from an 830px-wide original, so there is no 1100 size). Nothing else has a photo.
 - **Logo.** `<Logo>` and `public/favicon.svg` are drawn here, not commissioned. See "The logo" above.
 
-Two known gaps in the build itself, neither a bug to be surprised by:
+One known gap in the build itself, not a bug to be surprised by:
 
 - **No mobile nav.** Below `md` the navbar keeps the flower mark, the language switcher and the "Get in
   touch" button, and hides the links entirely. Below `sm` the wordmark text goes too — the pill cannot hold
@@ -560,8 +561,20 @@ Two known gaps in the build itself, neither a bug to be surprised by:
   Watch the width when you touch the navbar: the Croatian labels are longer than the English ones ("Kako to
   funkcionira" against "How it works"), so 768px — where the links appear — is the tightest point, not the
   phone widths.
-- **No contact form.** A form needs a backend and this is a static build; the contact section is a mailto
-  link. A hosted form service would be the small next step.
+
+### The contact form
+
+`src/sections/Contact.jsx` has a plain HTML form that POSTs to `https://formsubmit.co/<site.email>`. There is
+no JavaScript: FormSubmit emails the fields to Rebekah and redirects to `_next`, which is this page's absolute
+URL in the same language plus `#contact`. The form also sends `_captcha=false`, `_template=table` and a
+`_honey` honeypot.
+
+- **The first submission ever sends Rebekah a FormSubmit activation email, and she must click it.** Until she
+  does, nothing is delivered.
+- After activation, FormSubmit offers a random alias string. It can replace the address in `action` so the
+  address is not in the page source. The mailto link shows it anyway, so this is optional.
+- The field labels, button text and email subject are UI chrome, so they live under `contact.form` in both
+  dictionaries.
 
 ### Don't invent
 
