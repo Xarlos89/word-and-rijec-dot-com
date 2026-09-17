@@ -77,7 +77,7 @@ export default function Rates() {
                   return (
                     <li key={id} className="py-5 border-b border-line last:border-0 first:pt-0">
                       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-                        <p className="font-display text-xl text-ink">{name}</p>
+                        <p className="font-title text-xl text-ink">{name}</p>
                         {hourly && (
                           <p className="font-display text-2xl text-dandelion-deep whitespace-nowrap">
                             {hourly}{' '}

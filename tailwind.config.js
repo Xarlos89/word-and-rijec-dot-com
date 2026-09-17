@@ -51,13 +51,15 @@ export default {
         line: '#74837C',        // hairlines and ghost-button borders
       },
       fontFamily: {
-        // Valley Sans, at the client's request. One weight (400) and no
-        // italic — see src/index.css, and never put a `font-medium` or
-        // heavier utility on display type or the browser fakes it.
-        // Note its W comes to a POINT, not the rounded bottom an earlier
-        // round of this design required; that requirement was set aside when
-        // this face was chosen. See CLAUDE.md → Type.
-        display: ['"Valley Sans"', 'ui-rounded', 'system-ui', 'sans-serif'],
+        // Berkshire Swash, at the client's request: titles and the lines
+        // under them. One weight (400) and no italic — see src/index.css, and
+        // never put a `font-medium` or heavier utility on display type or the
+        // browser fakes it. Body text stays in Nunito. See CLAUDE.md → Type.
+        display: ['"Berkshire Swash"', 'Georgia', 'serif'],
+        // Valley Sans, for the small titles INSIDE cards and lists — service
+        // titles, the how-it-works step titles, rate names, FAQ questions.
+        // The client found Berkshire too much there. Same one-weight rule.
+        title: ['"Valley Sans"', 'ui-rounded', 'system-ui', 'sans-serif'],
         sans: ['Nunito', 'ui-rounded', 'system-ui', 'sans-serif'],
       },
       borderRadius: {

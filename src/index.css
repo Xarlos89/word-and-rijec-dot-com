@@ -4,7 +4,7 @@
 
 /* Self-hosted fonts (pulled from Google Fonts). Local files mean no
    third-party request on page load and no flash of fallback type while a CDN
-   answers. Both families are variable.
+   answers. Nunito is variable; Berkshire Swash and Valley Sans are not.
 
    Each family ships TWO files, split on unicode-range exactly as Google
    serves them. The `latin` file is ASCII and Latin-1; `latin-ext` is what
@@ -13,12 +13,30 @@
    bytes: the browser only fetches them when a page actually uses those
    characters, and every Croatian sentence on the page does.
 
-   Valley Sans ships as ONE static weight, 400, with no italic and no other
+   Berkshire Swash and Valley Sans each ship as ONE static weight, 400, with no italic and no other
    cut. That is a constraint, not an oversight: a `font-medium`, `font-bold`
    or `italic` utility on display type makes the browser synthesise the shape,
-   which on this face is visibly wrong. Weight and emphasis in the display
+   which on a script face like this is visibly wrong. Weight and emphasis in the display
    register come from SIZE and COLOUR only. Nunito carries the real weights,
    so anything that has to get bolder is body type. */
+@font-face {
+  font-family: 'Berkshire Swash';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/berkshireswash-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Berkshire Swash';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/berkshireswash-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
 @font-face {
   font-family: 'Valley Sans';
   font-style: normal;
@@ -92,10 +110,8 @@
 
 @layer components {
   /* ── Type ──────────────────────────────────────────────── */
-  /* Valley Sans is wide and geometric with generous counters, so display
-     type here takes slightly negative tracking and a little more line-height
-     than a normal sans would want. It has one weight, so `font-normal` is the
-     only weight utility allowed on `.font-display`. */
+  /* Berkshire Swash is a heavy, swashed script. It has one weight, so
+     `font-normal` is the only weight utility allowed on `.font-display`. */
   /* There is no `-light` counterpart to this, or to any of the type classes
      below. Nothing on the site sits on a dark ground any more — the page
      alternates two light bands from the hero through to the footer, and
@@ -110,12 +126,12 @@
     font-size: clamp(2rem, 4.4vw, 2.9rem);
   }
 
-  /* The quiet second line under a section heading: the heading carries the
-     name of the section, this carries the descriptive phrase. Set in the body
-     face rather than the display one — Valley Sans at a middling size next to
-     a Valley Sans heading reads as a heading that failed to commit. */
+  /* The second line under a section heading: the heading carries the name of
+     the section, this carries the descriptive phrase. Set in the display face
+     at the client's request, a size step down from the heading; the size gap
+     and the softer colour are what keep it from reading as a second heading. */
   .section-sub {
-    @apply font-sans font-light leading-[1.5];
+    @apply font-display font-normal leading-[1.4];
     font-size: clamp(1.05rem, 2vw, 1.3rem);
   }
 
