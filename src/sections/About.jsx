@@ -29,7 +29,12 @@ export default function About() {
 
           <Reveal delay={110}>
             <h2 className="section-heading mb-3">{t.about.heading}</h2>
-            <p className="section-sub mb-8">{site.practitioner}</p>
+            <p
+              className="font-sans font-light text-ink-soft leading-[1.5] mb-8"
+              style={{ fontSize: 'clamp(1.05rem, 2vw, 1.3rem)' }}
+            >
+              {site.practitioner}
+            </p>
             <div className="space-y-5">
               {t.about.body.map((para) => (
                 <p key={para} className="lede">

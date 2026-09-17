@@ -14,7 +14,7 @@ function FAQItem({ q, a }) {
         aria-expanded={open}
         className="w-full flex items-center justify-between gap-6 py-6 text-left group"
       >
-        <span className="font-display text-lg sm:text-xl text-ink leading-snug group-hover:text-pine transition-colors duration-300">
+        <span className="font-title text-lg sm:text-xl text-ink leading-snug group-hover:text-pine transition-colors duration-300">
           {q}
         </span>
         <span

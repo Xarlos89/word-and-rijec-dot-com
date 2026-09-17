@@ -23,7 +23,7 @@ export default function Approach() {
             <Reveal key={numerals[i]} delay={i * 90} className="h-full">
               <li className="h-full flex flex-col gap-3 pt-6 border-t border-line">
                 <span className="font-display text-3xl text-dandelion-deep leading-none">{numerals[i]}</span>
-                <h3 className="font-display text-xl text-ink">{title}</h3>
+                <h3 className="font-title text-xl text-ink">{title}</h3>
                 <p className="font-sans text-[15px] text-ink-soft leading-[1.8]">{body}</p>
               </li>
             </Reveal>

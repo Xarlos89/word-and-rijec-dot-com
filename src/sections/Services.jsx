@@ -50,7 +50,7 @@ export default function Services() {
               <article className="soft-card h-full flex flex-col gap-4">
                 <span className="text-pine">{icons[id]}</span>
                 <div>
-                  <h3 className="font-display text-2xl text-ink leading-snug">{title}</h3>
+                  <h3 className="font-title text-2xl text-ink leading-snug">{title}</h3>
                   <p className="font-sans text-[13px] text-ink-soft/80 mt-1">{audience}</p>
                 </div>
                 <p className="font-sans text-[15px] text-ink-soft leading-[1.8]">{body}</p>

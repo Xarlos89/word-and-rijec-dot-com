@@ -3,13 +3,13 @@
 Trims the variable axes of the self-hosted fonts down to the ranges this
 design actually uses, in place, in public/fonts/.
 
-The four files in public/fonts/ came straight from Google Fonts: two families
-(Valley Sans, Nunito), each split into a `latin` and a `latin-ext` file on
+The six files in public/fonts/ came straight from Google Fonts: three families
+(Berkshire Swash, Valley Sans, Nunito), each split into a `latin` and a `latin-ext` file on
 unicode-range. The split is load-bearing — latin-ext is what carries č, ć, š,
 ž and đ — so this script never merges or drops a file, it only narrows the
 weight axis inside each one.
 
-Only Nunito is variable; Valley Sans ships as a single static 400 and has
+Only Nunito is variable; Berkshire Swash and Valley Sans ship as a single static 400 and have
 nothing to trim. The page uses 300 to 700 of Nunito (the spaced-caps labels
 are bold). Masters outside those ranges are downloaded and
 never used.
@@ -35,8 +35,8 @@ from fontTools.varLib import instancer
 FONTS = Path(__file__).resolve().parent.parent / 'public' / 'fonts'
 
 LIMITS = {
-    # Valley Sans is a STATIC font — one weight, no axes — so it is not
-    # listed here and this script must not be pointed at it.
+    # Berkshire Swash and Valley Sans are STATIC fonts — one weight, no axes — so they are not
+    # listed here and this script must not be pointed at them.
     'nunito-latin.woff2': {'wght': (300, 700)},
     'nunito-latin-ext.woff2': {'wght': (300, 700)},
 }

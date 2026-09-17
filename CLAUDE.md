@@ -269,37 +269,44 @@ nothing uses a default Tailwind shadow.
 
 ### Type
 
-**Valley Sans** (`font-display`) for anything display-sized, **Nunito** (`font-sans`) for body and UI. Both
-self-hosted from Google Fonts.
+**Three faces**, all self-hosted from Google Fonts:
 
-**Valley Sans ships as one static weight (400), with no italic and no other cut.** That is the single most
-important thing to know about it:
+| utility | face | used for |
+| --- | --- | --- |
+| `font-display` | **Berkshire Swash** | the wordmark (hero, navbar, footer), every section heading and `.section-sub`, the hero tagline, the Approach numerals, the rate prices |
+| `font-title` | **Valley Sans** | the small titles *inside* cards and lists: service titles, Approach step titles, rate names, FAQ questions |
+| `font-sans` | **Nunito** | all running text and UI, plus the practitioner's name under "About me" (Nunito Light) |
+
+Berkshire was picked by the client on 2026-09-17 after previews of Fraunces, Cormorant Infant and Bodoni
+Moda, and first went on everything that had been Valley Sans. The client then found it **too much inside
+the cards** and had the list above moved back to Valley Sans, and the About name back to Nunito Light. So
+the rule is: **Berkshire for section-level type only.** A new card title, list item or question takes
+`font-title`, not `font-display`. The client also saw the hero paragraphs in Berkshire and chose against
+it — never put it on running text.
+
+**Berkshire Swash and Valley Sans each ship as one static weight (400), with no italic and no other cut.**
+That is the single most important thing to know about them:
 
 - Never put `font-medium`, `font-semibold`, `font-bold` or `italic` on display type. The browser will
   synthesise the shape, and on this face it is visibly wrong. `font-normal` is the only weight utility
-  allowed on `.font-display`.
+  allowed on `.font-display` or `.font-title`.
 - Emphasis in the display register comes from **size and colour only**. Anything that genuinely has to get
   bolder — the spaced-caps `.label`, button text — is body type, set in Nunito, which has real weights.
-- `scripts/trim-fonts.py` cannot touch it. There are no axes to trim; the script covers Nunito only.
-
-**Its W comes to a point.** An earlier round of this design treated a rounded W bottom as a hard
-requirement and the face was picked on that basis; choosing Valley Sans set that requirement aside. If it
-ever comes back, the faces that satisfy both a rounded W *and* full Croatian coverage are **Baloo 2**,
-**Dosis** and **Varela Round** — checked by extracting the `W` outline and the `cmap` from each candidate,
-not from a specimen page. Quicksand, Comfortaa, Nunito and M PLUS Rounded 1c all point the W. Fredoka and
-Sniglet have a rounded W and **no `č`, `ć` or `đ`**, so they cannot set this site's own name.
+- `scripts/trim-fonts.py` cannot touch them. There are no axes to trim; the script covers Nunito only.
+- Berkshire is already heavy, so keep it at roughly 17px and up. Below that the swashes clog.
 
 Other rules:
 
-- **No italic anywhere**, for the reason above. `.section-sub`, the footer tagline and the testimonial
-  quotes are set in Nunito Light at a larger size instead.
+- **No italic anywhere**, for the reason above. The testimonial quotes are set in Nunito Light at a larger
+  size instead.
 - The wordmark is **"Word & Riječ"** — an ampersand, not "and" — set in one colour and one weight, with no
   styling on either half. It appears in three places (`Hero`, `Navbar`, `Footer`) and they must agree; all
   three read `nameFirst`/`nameSecond` from `src/siteInfo.js` and put the `&amp;` between them.
 
-Section headings pair a short noun (`Services`, `Rates`, `FAQ`) with a lighter descriptive line beneath it
-(`.section-sub`), never the other way round. That second line is set in Nunito, not Valley Sans — a second
-display size under a display heading reads as a heading that failed to commit.
+Section headings pair a short noun (`Services`, `Rates`, `FAQ`) with a descriptive line beneath it
+(`.section-sub`), never the other way round. Both are Berkshire; the sub is kept apart from the heading by
+a clear size step and the softer `ink-soft` colour, and it must stay visibly smaller or it reads as a second
+heading.
 
 ### The logo
 
@@ -329,7 +336,8 @@ with the site's own name in the `h1`.
 
 - Never consolidate the `@font-face` blocks or drop a `-latin-ext` file to "save bytes". The browser only
   fetches it when the page uses one of those characters — but this page always will.
-- `index.html` preloads `valleysans-latin`, `valleysans-latin-ext` and `nunito-latin`. The ext file is
+- `index.html` preloads `berkshireswash-latin`, `berkshireswash-latin-ext` and `nunito-latin`. Valley Sans
+  is not preloaded: nothing on the first screen uses it. The ext file is
   preloaded specifically because "Riječ" is in the largest text on the first screen; without it the
   headline reflows mid-load.
 - If you replace a font, take both halves from the same Google Fonts request and keep the `unicode-range`

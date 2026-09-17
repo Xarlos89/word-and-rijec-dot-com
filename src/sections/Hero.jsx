@@ -53,7 +53,7 @@ export default function Hero() {
           </div>
 
           <p
-            className="font-sans font-light text-ink-soft text-balance leading-[1.4] mb-7 sm:mb-8"
+            className="font-display text-ink-soft text-balance leading-[1.4] mb-7 sm:mb-8"
             style={{ fontSize: 'clamp(1.15rem, 2.8vw, 1.6rem)' }}
           >
             {t.hero.lede}
