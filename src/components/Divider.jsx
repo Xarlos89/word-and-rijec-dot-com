@@ -6,9 +6,9 @@ import { palette } from '../palette'
  *
  * The ground and the STEMS are painted in the colour of the section BELOW,
  * over a background of the section above, so the next band does not begin at
- * a hard edge; it grows into the one before it. The BLOOMS are always
- * immortelle yellow (`dandelion`), whichever two bands meet — they are the
- * flower, not the ground. The stems still need `mint` and `haze` to stay
+ * a hard edge; it grows into the one before it. The BLOOMS are immortelle
+ * yellow (`dandelion`) over a `haze` background, and the same colour as the
+ * stems over a `mint` one — the client found the yellow too faint on green. The stems still need `mint` and `haze` to stay
  * apart in value, or they vanish with the seam.
  *
  * `from` is the colour of the section above, `to` the section below.
@@ -76,6 +76,9 @@ export default function Divider({ from, to, shape = 'meadow', className = '' }) 
   const fromColor = palette[from] ?? from
   const toColor = palette[to] ?? to
   const seam = seams[shape] ?? seams.meadow
+  // Yellow blooms only read against the grey band; on mint they wash out, so
+  // there the whole sprig takes the band-below colour, as it used to.
+  const bloomColor = from === 'mint' ? toColor : palette.dandelion
 
   return (
     <div aria-hidden="true" className={`relative leading-none ${className}`} style={{ background: fromColor }}>
@@ -94,7 +97,7 @@ export default function Divider({ from, to, shape = 'meadow', className = '' }) 
             <path key={i} d={sprig.stem} vectorEffect="non-scaling-stroke" />
           ))}
         </g>
-        <g fill={palette.dandelion}>
+        <g fill={bloomColor}>
           {seam.sprigs.flatMap((sprig, i) =>
             sprig.buds.map(([cx, cy, r], j) => <circle key={`${i}-${j}`} cx={cx} cy={cy} r={r} />)
           )}

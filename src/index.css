@@ -150,6 +150,16 @@
            transition-all duration-500 ease-out hover:bg-cloud hover:border-pine hover:shadow-lift;
   }
 
+  /* Contact form inputs. They sit on a `cloud` card, so the field is told
+     apart by its `line` border alone — 3.6:1 on cloud, enough for a
+     control's edge under WCAG 1.4.11. */
+  .form-field {
+    @apply block w-full px-5 py-3 bg-cloud text-ink font-sans text-[15px]
+           border border-line rounded-soft
+           transition-colors duration-300
+           focus:outline-none focus:border-pine focus:ring-2 focus:ring-pine/30;
+  }
+
   /* ── Surfaces — soft, borderless ───────────────────────── */
   /* `cloud` is the lightest tone on the page, so a card reads as raised on
      either band without a white panel appearing mid-section. On `mint` it is

@@ -39,17 +39,18 @@ export default function Hero() {
           {/* The site name is the `h1` for the same reason it is the largest
               thing on the page: it names what this page is about. The line
               under it is a `p`. */}
-          {/* The mark, then the name. The mark carries no words, so it
-              carries no alt text either — the h1 directly under it is what
-              names the business. */}
-          <Logo className="h-14 sm:h-20 w-auto text-pine mb-6 sm:mb-8" />
-
-          <h1
-            className="font-display text-pine text-balance leading-[1.1] tracking-[-0.015em] mb-5 sm:mb-6"
-            style={{ fontSize: 'clamp(2.6rem, 8vw, 4.6rem)' }}
-          >
-            {site.nameFirst} &amp; {site.nameSecond}
-          </h1>
+          {/* The mark to the left of the name, on one line. The mark carries
+              no words, so it carries no alt text either — the h1 beside it is
+              what names the business. */}
+          <div className="flex items-center gap-3 sm:gap-5 mb-5 sm:mb-6">
+            <Logo className="h-10 sm:h-14 lg:h-16 w-auto text-pine shrink-0" />
+            <h1
+              className="font-display text-pine text-balance leading-[1.1] tracking-[-0.015em]"
+              style={{ fontSize: 'clamp(2rem, 6.5vw, 3.75rem)' }}
+            >
+              {site.nameFirst} &amp; {site.nameSecond}
+            </h1>
+          </div>
 
           <p
             className="font-sans font-light text-ink-soft text-balance leading-[1.4] mb-7 sm:mb-8"
