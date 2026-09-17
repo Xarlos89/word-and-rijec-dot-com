@@ -10,9 +10,9 @@ language lessons, editing, proofreading and copywriting in English and Croatian.
 The page is built **twice, once per language** — `/` in English and `/hr/` in Croatian — from one set of
 components and two dictionaries. See "Two languages" below before touching any user-visible string.
 
-The **English page now carries the client's own copy** (hero, services, about, how it works, rates, FAQ,
-contact). The **Croatian page is still mostly lorem**, waiting for her own Croatian, and the testimonials
-are invented. See "What's placeholder" at the bottom — read that section before writing any content.
+**Both pages now carry the client's own copy** (hero, services, about, how it works, rates, FAQ,
+contact) — the English and the Croatian were each written by her. The testimonials are still invented,
+in both languages. See "What's placeholder" at the bottom — read that section before writing any content.
 
 The site is a sibling of `../guy-catz-dot-com` and `../veli-bol-home` and shares their stack and
 conventions; when something here is unclear, those are the reference implementations.
@@ -66,7 +66,6 @@ src/
   i18n/
     locales.js          the locale table + the path/asset-prefix maths (also read by vite.config.js)
     en.js  hr.js        the two dictionaries — every user-visible string
-    lorem.js            every placeholder paragraph, shared by both dictionaries
     index.jsx           <LangProvider>, useLang(), and the same-shape assertion
   palette.js            the two band colours as hex, for <Divider>'s inline SVG
   images.js             asset() and responsivePhoto() — the ONLY way to reference public/
@@ -124,11 +123,16 @@ the questions in the FAQ, and all UI chrome.
 **Not translated, and not to be:**
 
 - **The wordmark.** "Word & Riječ" is the business name and reads the same on both pages.
-- **Every sentence or paragraph of her copy.** The English is hers; the Croatian side reads `LOREM.x`
-  from `src/i18n/lorem.js` until she writes it. This is the "Don't invent" rule at the bottom of this file,
-  applied to a second language where it bites harder: a Croatian translation of her English is
-  indistinguishable from her own Croatian to a reader who does not speak it. `grep -rn "LOREM\." src/i18n/`
-  lists everything still outstanding; when `lorem.js` is empty, the copy is done.
+- **Every sentence or paragraph of her copy.** Both languages are hers, written separately — the two are
+  not line-for-line translations of each other, and should not be edited to become so. This is the
+  "Don't invent" rule at the bottom of this file, applied to a second language where it bites harder: a
+  Croatian translation of her English is indistinguishable from her own Croatian to a reader who does not
+  speak it. When she changes one language, ask for the other rather than translating.
+- **Her Croatian About has four paragraphs to the English five** (it has no "15 years of teaching"
+  paragraph). `about.body` is therefore listed in `FREE_LENGTH` in `src/i18n/index.jsx`, the one array the
+  same-shape check lets differ in length. Only arrays of plain strings may go on that list.
+- **Her Croatian headings differ slightly from the scaffold's**: `Cjenik` (not "Cijene"), `Kako funkcionira`,
+  `Javite se`, `Uređivanje i lektura`. The nav, submenu and rate names follow her wording.
 
 ### Adding a third language
 
@@ -381,7 +385,6 @@ only what is not text.
 | Rate names and units | `rates.items` in each dictionary |
 | **Prices** | the `prices` map in `src/sections/Rates.jsx`, keyed by the same ids |
 | Questions and answers | `faq.items` in each dictionary |
-| Every placeholder paragraph | `src/i18n/lorem.js`, shared by both dictionaries |
 | `<title>`, meta description, Open Graph, JSON-LD | `meta` in each dictionary, rendered by `src/components/Seo.jsx` |
 
 Section IDs, used by every anchor link: `#home` `#services` `#about` `#approach` `#testimonials` `#rates`
@@ -508,9 +511,8 @@ To launch, in one commit: delete the `robots` meta tag, change `robots.txt` to `
 that ships real copy, not before.
 
 The `robots` tag is in `index.html` rather than `Seo.jsx` on purpose: it applies to both languages, so the
-launch switch stays one edit rather than two. "Real copy" now means real copy **in both languages** —
-`src/i18n/lorem.js` empty, not just the English side filled in. Launching with a Croatian page full of
-English lorem is worse than not launching the Croatian page at all.
+launch switch stays one edit rather than two. "Real copy" means real copy **in both languages**, and no
+invented testimonials in either.
 
 ## What's placeholder
 
@@ -519,6 +521,8 @@ Assume everything is, unless it is in this list of things that are real:
 - The business name, "Word & Riječ", the domain `word-and-rijec.com`, and the two languages.
 - The four services: language lessons, tutoring, editing & proofreading, copywriting — and the English
   titles, audiences and descriptions of each, in that order.
+- **The Croatian copy**, all of it except the testimonials and short UI chrome — supplied by the client in
+  Croatian, not translated from her English.
 - **The English copy** — the hero ("More language. More life." and its two paragraphs, also used as the
   English tagline), About (Rebekah Berković's own text), How it works, the FAQ answers, the rates note and
   the contact paragraph. All supplied by the client.
@@ -528,25 +532,20 @@ Assume everything is, unless it is in this list of things that are real:
   blocks, lessons €30/h with blocks and savings, academic English €40/h, proofreading €30/h, copy quoted
   per project. The figures are shared by both languages; the names and package labels are translated.
 - The stack, the design system, the build and the deploy workflow.
-- The **bilingual machinery** — the two routes, the dictionaries, the switcher, the hreflang. The Croatian
-  translations of the section names, the services, the rate units and the FAQ questions are real Croatian,
-  but they are a translation of scaffold copy, not of anything the client has written.
+- The **bilingual machinery** — the two routes, the dictionaries, the switcher, the hreflang.
 
 Placeholder, and to be replaced before anything is shown to the public:
 
-- **The Croatian copy.** Every sentence or paragraph on `/hr/` is still lorem from `src/i18n/lorem.js`.
-  (The footer blurb was removed rather than filled.) `grep -rn "LOREM\." src/i18n/` is the outstanding-work list; when
-  `lorem.js` is empty, the copy is done.
 - **`src/siteInfo.js`** — the email (`rebekahberkovic@gmail.com`) is real. No phone number and no social links; the
   footer and the contact section hide those fields while they are empty, so leaving them blank is safe.
   `site.url` is now real.
-- **The Croatian tagline and "Online, worldwide"**, in `site` in each dictionary.
+- **"Online, worldwide"** (`site.location`) in each dictionary.
 - **Testimonials.** The three English quotes (Sarah M., Ivana K., Marko P.) were **made up for the layout
-  at the site owner's request** — they are not real students; the Croatian side is lorem. Replace them with
+  at the site owner's request** — they are not real students; the Croatian quotes are a translation of those
+  invented ones, also at the site owner's request. Replace them with
   real quotes, or delete the section from `App.jsx` (and re-pair the
   dividers around it) rather than launching with invented ones — and delete `testimonials` from *both*
   dictionaries, or the same-shape assertion will pass while the section is gone and quietly rot.
-- **FAQ answers in Croatian.** The English answers are hers; the Croatian ones are lorem.
 - **Photography.** Only the About portrait is real (`public/images/rebekah-berkovic-{400,600,830}.webp`,
   cropped to 4:5 from an 830px-wide original, so there is no 1100 size). Nothing else has a photo.
 - **Logo.** `<Logo>` and `public/favicon.svg` are drawn here, not commissioned. See "The logo" above.
@@ -586,5 +585,5 @@ about her business is not.
 **This applies twice over to the Croatian page.** Do not translate her English copy into Croatian on her
 behalf, and do not write Croatian copy to fill the gap: she is a Croatian language professional, the
 Croatian page is the one her Croatian clients will read, and a fluent-sounding paragraph she did not write
-is the worst possible thing to put in front of them. Ask for both languages, or leave the lorem where it
-is — it is at least visibly unfinished.
+is the worst possible thing to put in front of them. Ask for both languages, or leave the gap visibly
+unfinished.

@@ -1,5 +1,3 @@
-import { LOREM } from './lorem'
-
 /**
  * English — the root locale, and the reference shape. hr.js must mirror this
  * object key for key and array for array; src/i18n/index.jsx asserts it at
@@ -7,7 +5,7 @@ import { LOREM } from './lorem'
  * page with a hole in it.
  *
  * The copy here is the client's own, except for the testimonials (see the
- * note on them) and anything still reading `LOREM.x`.
+ * note on them).
  */
 export default {
   meta: {

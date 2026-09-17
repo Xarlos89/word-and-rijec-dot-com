@@ -17,11 +17,22 @@ const dictionaries = { en, hr }
  * browser. Both flags below are statically replaced by Vite, so the whole
  * check is dead code in the client bundle.
  */
+// Prose paragraph lists, which the client writes separately in each language
+// and which need not have the same number of paragraphs. Only arrays of
+// strings, rendered with .map(), belong here.
+const FREE_LENGTH = ['.about.body']
+
 function assertSameShape(a, b, path = '') {
   const here = path || '<root>'
   if (Array.isArray(a) || Array.isArray(b)) {
     if (!Array.isArray(a) || !Array.isArray(b)) {
       throw new Error(`i18n: ${here} is an array in one dictionary and not the other`)
+    }
+    if (FREE_LENGTH.includes(path)) {
+      if (![...a, ...b].every((x) => typeof x === 'string')) {
+        throw new Error(`i18n: ${here} may differ in length, so it must hold strings only`)
+      }
+      return
     }
     if (a.length !== b.length) {
       throw new Error(`i18n: ${here} has ${a.length} entries in en and ${b.length} in hr`)
